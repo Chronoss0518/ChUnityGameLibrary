@@ -54,7 +54,7 @@ public class CustomInspectorBase : Editor
    */
     protected void HelpBox(in string _description, in MessageType _type = MessageType.Info)
     {
-        if (_description == null) return;
+        if (string.IsNullOrWhiteSpace(_description)) return;
 
         EditorGUILayout.HelpBox(_description, _type);
     }
