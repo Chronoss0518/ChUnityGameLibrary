@@ -73,7 +73,7 @@ public class CustomInspectorBase : Editor
 
     /**
    * @fn void BeginToggleGroup(ref bool _flg,in string _name)
-   * @brief 囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、全て設置し終わったらEndToggleGroupを使用する。
+   * @brief EndToggleGroupと一緒に囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、全て設置し終わったらEndToggleGroupを使用する。
    */
     protected void BeginToggleGroup(ref bool _flg,in string _name)
     {
@@ -81,10 +81,10 @@ public class CustomInspectorBase : Editor
     }
 
     /**
-   * @fn void EndHorizontal()
-   * @brief 同じ高さにInspectorの機能を配置する。BeginHorizontalを使用した後に利用する。
+   * @fn void EndToggleGroup()
+   * @brief BeginToggleGroupと一緒に囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、BeginToggleGroupを使用してToggleを増やしていく。
    */
-    protected void EndHorizontal()
+    protected void EndToggleGroup()
     {
         EditorGUILayout.EndToggleGroup();
     }
