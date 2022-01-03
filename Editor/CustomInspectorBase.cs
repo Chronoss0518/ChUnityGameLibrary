@@ -73,7 +73,7 @@ public class CustomInspectorBase : Editor
 
     /**
    * @fn void BeginToggleGroup(ref bool _flg,in string _name)
-   * @brief EndToggleGroupと一緒に囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、全て設置し終わったらEndToggleGroupを使用する。
+   * @brief 複数のBeginToggleGroupを設置して、終りにEndToggleGroupを置く
    */
     protected void BeginToggleGroup(ref bool _flg,in string _name)
     {
@@ -82,12 +82,13 @@ public class CustomInspectorBase : Editor
 
     /**
    * @fn void EndToggleGroup()
-   * @brief BeginToggleGroupと一緒に囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、BeginToggleGroupを使用してToggleを増やしていく。
+   * @brief 複数のBeginToggleGroupを設置して、終りにEndToggleGroupを置く
    */
     protected void EndToggleGroup()
     {
         EditorGUILayout.EndToggleGroup();
     }
+
     /**
    * @fn void BeginHorizontal()
    * @brief 同じ高さにInspectorの機能を配置する。EndHorizontalを使用する前に利用する。
@@ -316,5 +317,119 @@ public class CustomInspectorBase : Editor
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     //InputField//
+
+    /**
+   * @fn void InputField(ref string _val, in string _title, in string _description = "")
+   * @brief Textを入力する
+   */
+    protected void InputField(ref string _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.TextField(_val);
+    }
+
+    /**
+   * @fn void InputField(ref int _val, in string _title, in string _description = "")
+   * @brief Intを入力する
+   */
+    protected void InputField(ref int _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.IntField(_val);
+    }
+
+    /**
+   * @fn void InputField(ref float _val, in string _title, in string _description = "")
+   * @brief Intを入力する
+   */
+    protected void InputField(ref float _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.FloatField(_val);
+    }
+
+    /**
+   * @fn void InputField(ref Vector2 _val, in string _title, in string _description = "")
+   * @brief Vector2を入力する
+   */
+    protected void InputField(ref Vector2 _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.Vector2Field("" ,_val);
+    }
+
+    /**
+   * @fn void InputField(ref Vector2Int _val, in string _title, in string _description = "")
+   * @brief Vector2を入力する
+   */
+    protected void InputField(ref Vector2Int _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.Vector2IntField("", _val);
+    }
+
+    /**
+   * @fn void InputField(ref Vector3 _val, in string _title, in string _description = "")
+   * @brief Vector2を入力する
+   */
+    protected void InputField(ref Vector3 _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.Vector3Field("", _val);
+    }
+
+    /**
+   * @fn void InputField(ref Vector3Int _val, in string _title, in string _description = "")
+   * @brief Vector2を入力する
+   */
+    protected void InputField(ref Vector3Int _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.Vector3IntField("", _val);
+    }
+
+    /**
+   * @fn void InputField(ref Vector4 _val, in string _title, in string _description = "")
+   * @brief Vector2を入力する
+   */
+    protected void InputField(ref Vector4 _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.Vector4Field("", _val);
+    }
+
+    /**
+   * @fn void InputField(ref Object _val, in string _title, in string _description = "")
+   * @brief Objectを入力する
+   */
+    protected void InputField<T>(ref Object _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.ObjectField("",_val,typeof(T),false);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Popup//
+
+    /**
+   * @fn void EnumPopup(ref System.Enum _val, in string _title, in string _description = "")
+   * @brief Enumを選択させるポップアップを表示
+   */
+    protected void EnumPopup(ref System.Enum _val, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _val = EditorGUILayout.EnumPopup("",_val);
+    }
+
 
 }
