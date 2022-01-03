@@ -17,6 +17,10 @@ using UnityEditor;
 */
 public class CustomInspectorBase : Editor
 {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //BaseFunction//
+
     /**
    * @fn void Line()
    * @brief Inspectorを区切るためのラインを作る。
@@ -36,6 +40,55 @@ public class CustomInspectorBase : Editor
     }
 
     /**
+   * @fn void Label(in string _str)
+   * @brief Inspector上に文字を書く
+   */
+    protected void Label(in string _str)
+    {
+        EditorGUILayout.LabelField(_str);
+    }
+
+    /**
+   * @fn void HelpBox(in string _description, in MessageType _type = MessageType.Info)
+   * @brief Helpboxを作成する
+   */
+    protected void HelpBox(in string _description, in MessageType _type = MessageType.Info)
+    {
+        if (_description == null) return;
+
+        EditorGUILayout.HelpBox(_description, _type);
+    }
+
+    /**
+   * @fn void VerticalSpace(in float _size)
+   * @brief Inspectorの項目と項目の間に空白を入れる。
+   */
+    protected void VerticalSpace(in float _size)
+    {
+        GUILayout.Space(_size);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //PairFunctions//
+
+    /**
+   * @fn void BeginToggleGroup(ref bool _flg,in string _name)
+   * @brief 囲ったToggleButtonのうち一つだけを選択させるようにする。必要な個数用意して、全て設置し終わったらEndToggleGroupを使用する。
+   */
+    protected void BeginToggleGroup(ref bool _flg,in string _name)
+    {
+        EditorGUILayout.BeginToggleGroup(_name,_flg);
+    }
+
+    /**
+   * @fn void EndHorizontal()
+   * @brief 同じ高さにInspectorの機能を配置する。BeginHorizontalを使用した後に利用する。
+   */
+    protected void EndHorizontal()
+    {
+        EditorGUILayout.EndToggleGroup();
+    }
+    /**
    * @fn void BeginHorizontal()
    * @brief 同じ高さにInspectorの機能を配置する。EndHorizontalを使用する前に利用する。
    */
@@ -53,14 +106,42 @@ public class CustomInspectorBase : Editor
         EditorGUILayout.EndHorizontal();
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //IsFunction//
+
     /**
    * @fn bool IsFoldOut(ref bool _flg, in string _name)
    * @brief 対象のグループを折りたためるようにし、グループが展開されており確認できることを確認する。
    */
-    protected bool IsFoldOut(ref bool _flg, in string _name)
+    protected bool IsExtractFoldOut(ref bool _flg, in string _name)
     {
         return (_flg = EditorGUILayout.Foldout(_flg, _name));
     }
+
+    /**
+   * @fn bool IsPushButton(in string _name)
+   * @brief Buttonを表示し、Buttonが押されたかを確認する。
+   */
+    protected bool IsPushButton(in string _name)
+    {
+        return GUILayout.Button(_name);
+    }
+
+    /**
+   * @fn bool Toggle(ref bool _flg, in string _title, in string _description = "")
+   * @brief チェックされていることを確認する
+   */
+    protected bool IsTrueToggle(ref bool _flg, in string _title, in string _description = "")
+    {
+        Label(_title);
+        HelpBox(_description);
+        _flg = EditorGUILayout.Toggle(_flg);
+
+        return _flg;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Slider//
 
     /**
    * @fn void Slider(ref float _val, in float _low, in float _high, in string _title, in string _description = "")
@@ -233,55 +314,7 @@ public class CustomInspectorBase : Editor
 
     }
 
-    /**
-   * @fn bool Toggle(ref bool _flg, in string _title, in string _description = "")
-   * @brief チェックされていることを確認する
-   */
-    protected bool IsTrueToggle(ref bool _flg, in string _title, in string _description = "")
-    {
-        Label(_title);
-        HelpBox(_description);
-        _flg = EditorGUILayout.Toggle(_flg);
-
-        return _flg;
-    }
-
-    /**
-   * @fn void Label(in string _str)
-   * @brief Inspector上に文字を書く
-   */
-    protected void Label(in string _str)
-    {
-        EditorGUILayout.LabelField(_str);
-    }
-
-    /**
-   * @fn void HelpBox(in string _description, in MessageType _type = MessageType.Info)
-   * @brief Helpboxを作成する
-   */
-    protected void HelpBox(in string _description, in MessageType _type = MessageType.Info)
-    {
-        if (_description == null) return;
-
-        EditorGUILayout.HelpBox(_description, _type);
-    }
-
-    /**
-   * @fn bool IsPushButton(in string _name)
-   * @brief Buttonを表示し、Buttonが押されたかを確認する。
-   */
-    protected bool IsPushButton(in string _name)
-    {
-        return GUILayout.Button(_name);
-    }
-
-    /**
-   * @fn void VerticalSpace(in float _size)
-   * @brief Inspectorの項目と項目の間に空白を入れる。
-   */
-    protected void VerticalSpace(in float _size)
-    {
-        GUILayout.Space(_size);
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //InputField//
 
 }
