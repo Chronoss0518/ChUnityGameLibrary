@@ -16,6 +16,11 @@ public class LifePoint : MonoBehaviour
 
     public int lifePoint { set { lp = value; } get { return lp; } }
 
+    public void SetLP(int _lp) 
+    {
+        lp = _lp >= maxLP ? maxLP : _lp; 
+    }
+
     public void Heal(int _heal)
     {
         lp += _heal;
