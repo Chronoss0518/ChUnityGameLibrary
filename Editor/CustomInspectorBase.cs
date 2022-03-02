@@ -21,6 +21,21 @@ namespace ChUnity
 {
     public class CustomInspectorBase : Editor
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //CallBack//
+
+        private Dictionary<string, SerializedProperty> serializeProperties = new Dictionary<string, SerializedProperty>();
+
+        protected void SetSerializeProperty(string _propertyName)
+        {
+            serializeProperties[_propertyName] = serializedObject.FindProperty(_propertyName);
+        }
+
+        virtual protected void OnEnable()
+        {
+            
+        }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //BaseFunction//
@@ -321,6 +336,23 @@ namespace ChUnity
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //InputField//
+
+        /**
+       * @fn void PropertyField(ref SerializedProperty _object, in string _title, in string _description = "")
+       * @brief Unityで利用されるクラスを設定する
+       */
+        protected void PropertyField(in string _propertyName, in string _title, in string _description = "")
+        {
+            Label(_title);
+            HelpBox(_description);
+
+            serializedObject.Update();
+
+            EditorGUILayout.PropertyField(serializeProperties[_propertyName]);
+
+            serializedObject.ApplyModifiedProperties();
+
+        }
 
         /**
        * @fn void InputField(ref string _val, in string _title, in string _description = "")
