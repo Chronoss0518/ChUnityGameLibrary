@@ -32,6 +32,7 @@ namespace ChUnity.BattleType
 
         public int lowAttackPoint { set { lATK = value < hATK ? value : hATK - 1; } get { return lATK; } }
         public int highAttackPoint { set { hATK = value > lATK ? value : lATK + 1; } get { return hATK; } }
+        
 
     }
 

@@ -32,9 +32,23 @@ namespace ChUnity.BattleType
         */
         static protected int lMaxLP = 0, hMaxLP = 100;
 
+        [HideInInspector]
+        public UnityEngine.Events.UnityEvent action = new UnityEngine.Events.UnityEvent();
+
         public int maxLifePoint { set { maxLP = value; } get { return maxLP; } }
         public int lowMaxLifePoint { set { lMaxLP = value < hMaxLP ? value : hMaxLP - 1; } get { return lMaxLP; } }
         public int highMaxLifePoint { set { hMaxLP = value > lMaxLP ? value : lMaxLP + 1; } get { return hMaxLP; } }
+
+        /**
+       * @fn void Update()
+       * @brief Unity特有のCallback関数
+       */
+        protected void Update()
+        {
+            if (!IsDeath()) return;
+
+            action.Invoke();
+        }
 
         /**
        * @fn public void SetLP(int _lp)

@@ -21,12 +21,18 @@ namespace ChUnity.BattleType
     public class LifePointEditor : CustomInspectorBase
     {
 
+        override protected void OnEnable()
+        {
+            SetSerializeProperty("action");
+        }
+
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
         public override void OnInspectorGUI()
         {
+
 
             base.OnInspectorGUI();
 
@@ -37,6 +43,8 @@ namespace ChUnity.BattleType
                 int tmp = obj.maxLifePoint;
                 Slider(ref tmp, obj.lowMaxLifePoint, obj.highMaxLifePoint, "Max Life Point");
                 obj.maxLifePoint = tmp;
+
+                PropertyField("action","Death Event");
             }
 
             {
@@ -54,6 +62,7 @@ namespace ChUnity.BattleType
                 obj.lowMaxLifePoint = low;
                 obj.highMaxLifePoint = high;
             }
+
 
         }
     }
