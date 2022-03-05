@@ -70,7 +70,7 @@ public class ObjectRotate : MonoBehaviour
             Rigidbody body = moveTarget.GetComponent<Rigidbody>();
 
             if (body != null) body.MoveRotation(rot);
-            else transform.rotation = rot * transform.rotation;
+            else moveTarget.transform.rotation = rot * moveTarget.transform.rotation;
 
         }
 
