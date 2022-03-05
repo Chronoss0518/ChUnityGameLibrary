@@ -13,6 +13,8 @@ public class ObjectMove : MonoBehaviour
 
     private Vector3 dir = Vector3.zero;
 
+    public Vector3 autoMoveDir = Vector3.zero;
+
     public void AddMoveLen(float _mLen) { moveLen += _mLen; }
 
     public void SubMoveLen(float _mLen) { moveLen -= _mLen; }
@@ -68,7 +70,7 @@ public class ObjectMove : MonoBehaviour
 
         if(moveTarget != null)
         {
-            if (moveDirFlg) dir = transform.rotation * dir;
+            if (moveDirFlg) dir = moveTarget.transform.rotation * dir;
             if(normalizeFlg) dir.Normalize();
 
             dir *= moveLen;
@@ -76,11 +78,11 @@ public class ObjectMove : MonoBehaviour
             Rigidbody body = moveTarget.GetComponent<Rigidbody>();
 
             if (body != null) body.MovePosition(dir);
-            else transform.position += dir;
+            else moveTarget.transform.position += dir;
 
         }
 
-        dir = Vector3.zero;
+        dir = autoMoveDir;
 
     }
 }
