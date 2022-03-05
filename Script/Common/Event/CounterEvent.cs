@@ -7,6 +7,7 @@ namespace ChUnity.Common.Event
 
     public class CounterEvent : MonoBehaviour
     {
+        ulong nowCounter = 0;
         ulong counter = 0;
 
         public ulong GetCount() { return counter; }
@@ -17,7 +18,9 @@ namespace ChUnity.Common.Event
 
         public void CountDown() { counter = (counter <= 0) ? 0 : counter - 1; }
 
-        //public Dictionary<ulong , bool, UnityEngine.Events.UnityEvent> countAction;
+
+
+        public Dictionary<ulong , UnityEngine.Events.UnityEvent> countAction;
 
         // Start is called before the first frame update
         void Start()
@@ -28,7 +31,13 @@ namespace ChUnity.Common.Event
         // Update is called once per frame
         void Update()
         {
-            
+            if (counter == nowCounter) return;
+
+            if (!countAction.ContainsKey(nowCounter)) return;
+
+            countAction[nowCounter].Invoke();
+
+            nowCounter = counter;
         }
     }
 
