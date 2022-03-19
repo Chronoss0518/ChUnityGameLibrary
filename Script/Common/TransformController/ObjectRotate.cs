@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectRotate : MonoBehaviour
+public enum Axis
+{
+    none,px,py,pz,mx,my,mz
+}
+
+public class ObjectRotate : GameObjectTargetSelector
 {
     public float rotSize = 0.0f;
 
-    public GameObject moveTarget = null;
-
     private Quaternion rot = Quaternion.identity;
+
+    public Axis autoRotateAxis = Axis.none;
 
     public void AddRotSize(float _rot) { rotSize += _rot; }
 
@@ -55,8 +60,8 @@ public class ObjectRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (moveTarget != null) return;
-        moveTarget = gameObject;
+        if (targetObject != null) return;
+        targetObject = gameObject;
     }
 
     // Update is called once per frame
@@ -64,13 +69,35 @@ public class ObjectRotate : MonoBehaviour
     {
         Start();
 
-        if (moveTarget != null)
+        if (targetObject != null)
         {
+            switch (autoRotateAxis)
+            {
+                case Axis.px:
+                    RotAxisX();
+                    break;
+                case Axis.py:
+                    RotAxisY();
+                    break;
+                case Axis.pz:
+                    RotAxisZ();
+                    break;
+                case Axis.mx:
+                    RotAxisXInverse();
+                    break;
+                case Axis.my:
+                    RotAxisYInverse();
+                    break;
+                case Axis.mz:
+                    RotAxisZInverse();
+                    break;
+            }
 
-            Rigidbody body = moveTarget.GetComponent<Rigidbody>();
 
-            if (body != null) body.MoveRotation(rot);
-            else moveTarget.transform.rotation = rot * moveTarget.transform.rotation;
+            Rigidbody body = targetObject.GetComponent<Rigidbody>();
+
+            if (body != null) body.MoveRotation(rot * targetObject.transform.rotation);
+            else targetObject.transform.rotation = rot * targetObject.transform.rotation;
 
         }
 

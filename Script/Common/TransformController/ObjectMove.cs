@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectMove : MonoBehaviour
+public class ObjectMove : GameObjectTargetSelector
 {
     public float moveLen = 0.0f;
-
-    public GameObject moveTarget = null;
 
     public bool normalizeFlg = true;
     public bool moveDirFlg = true;
@@ -59,8 +57,8 @@ public class ObjectMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (moveTarget != null) return;
-        moveTarget = gameObject;
+        if (targetObject != null) return;
+        targetObject = gameObject;
     }
 
     // Update is called once per frame
@@ -68,17 +66,17 @@ public class ObjectMove : MonoBehaviour
     {
         Start();
 
-        if(moveTarget != null)
+        if(targetObject != null)
         {
-            if (moveDirFlg) dir = moveTarget.transform.rotation * dir;
+            if (moveDirFlg) dir = targetObject.transform.rotation * dir;
             if(normalizeFlg) dir.Normalize();
 
             dir *= moveLen;
 
-            Rigidbody body = moveTarget.GetComponent<Rigidbody>();
+            Rigidbody body = targetObject.GetComponent<Rigidbody>();
 
-            if (body != null) body.MovePosition(dir);
-            else moveTarget.transform.position += dir;
+            if (body != null) body.MovePosition(dir + targetObject.transform.position);
+            else targetObject.transform.position += dir;
 
         }
 
