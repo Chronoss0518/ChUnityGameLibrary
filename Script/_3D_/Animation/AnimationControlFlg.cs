@@ -32,6 +32,7 @@ namespace ChUnity._3D_
         {
             base.Update();
 
+            if (string.IsNullOrWhiteSpace(flgName)) return;
             if (!IsInit()) return;
 
             SetBool(flgName, flg);
