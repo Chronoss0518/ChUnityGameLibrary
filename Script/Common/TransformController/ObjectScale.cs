@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectScale : MonoBehaviour
+public class ObjectScale : GameObjectTargetSelector
 {
     public float scaleSize = 0.0f;
-
-    public GameObject moveTarget = null;
 
     private Vector3 scale = Vector3.zero;
 
@@ -68,8 +66,8 @@ public class ObjectScale : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (moveTarget != null) return;
-        moveTarget = gameObject;
+        if (targetObject != null) return;
+        targetObject= gameObject;
     }
 
     // Update is called once per frame
@@ -77,13 +75,12 @@ public class ObjectScale : MonoBehaviour
     {
         Start();
 
-        if(moveTarget != null)
+        if(targetObject != null)
         {
-            Rigidbody body = moveTarget.GetComponent<Rigidbody>();
+            Rigidbody body = targetObject.GetComponent<Rigidbody>();
 
             if (body != null) body.transform.localScale = scale;
-            else moveTarget.transform.localScale = scale;
-
+            else targetObject.transform.localScale = scale;
         }
         
         ZeroTest();

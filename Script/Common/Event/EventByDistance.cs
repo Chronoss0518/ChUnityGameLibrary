@@ -12,6 +12,8 @@ public class EventByDistance : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent action = new UnityEngine.Events.UnityEvent();
 
+    public bool nearActFlg = false;
+
     bool playFlg = false;
 
     public void ReSet()
@@ -34,7 +36,10 @@ public class EventByDistance : MonoBehaviour
 
         Vector3 pos = tmp - gameObject.transform.position;
 
-        if(pos.magnitude <= distance)return;
+        if(nearActFlg && (Mathf.Abs(pos.x) + Mathf.Abs(pos.y) + Mathf.Abs(pos.z) > distance)) return;
+
+        if(!nearActFlg && (Mathf.Abs(pos.x) + Mathf.Abs(pos.y) + Mathf.Abs(pos.z) < distance)) return;
+
 
         action.Invoke();
 

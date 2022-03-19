@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeleteThisObject : MonoBehaviour
+public class DeleteThisObject : GameObjectTargetSelector
 {
-    public GameObject targetObject = null;
-
     public void Delete()
     {
         Destroy(targetObject);

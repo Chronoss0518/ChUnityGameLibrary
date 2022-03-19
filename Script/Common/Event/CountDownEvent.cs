@@ -15,6 +15,8 @@ namespace ChUnity.Common
         ulong count = 0;
         ulong nowCount = 0;
 
+        public ulong getNowCount { get { return nowCount; } }
+
         public void CountDown() { count = count > 0 ? count - 1 : 0; }
 
         public void ReSet()

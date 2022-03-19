@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace ChUnity.Common
 {
-    public class LoadGameObject : MonoBehaviour
+    public class LoadGameObject : GameObjectTargetSelector
     {
-        public GameObject loadObject = null;
-
         public void LoadResourceObject(string _path)
         {
             var obj = (GameObject)Resources.Load(_path);
@@ -35,23 +33,23 @@ namespace ChUnity.Common
 
         public void LoadObject()
         {
-            if (loadObject == null) return;
+            if (targetObject == null) return;
 
-            Instantiate(loadObject);
+            Instantiate(targetObject);
         }
 
         public void LoadObject(GameObject _targetObjectPosition)
         {
-            if (loadObject == null) return;
+            if (targetObject == null) return;
 
-            Instantiate(loadObject, _targetObjectPosition.transform);
+            Instantiate(targetObject, _targetObjectPosition.transform);
         }
 
         public void LoadObjectUnChild(GameObject _targetObjectPosition)
         {
-            if (loadObject == null) return;
+            if (targetObject == null) return;
 
-            Instantiate(loadObject, _targetObjectPosition.transform.position, _targetObjectPosition.transform.rotation);
+            Instantiate(targetObject, _targetObjectPosition.transform.position, _targetObjectPosition.transform.rotation);
         }
 
     }
