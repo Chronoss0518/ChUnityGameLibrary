@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateCursol : MonoBehaviour
+public class RotateCursol : GameObjectTargetSelector
 {
 
     public float moveSize = 0.0f;
-
-    public GameObject targetObject = null;
 
     Vector3 nowPos;
 
@@ -26,19 +24,19 @@ public class RotateCursol : MonoBehaviour
 
         var pos = Input.mousePosition;
         
-        if (targetObject != null)
+        if (target != null)
         {
 
             var rotSize = pos - nowPos;
 
             rotSize *= moveSize;
 
-            var rot = Quaternion.Euler(rotSize.y, rotSize.x, 0.0f);
+            var rot = Quaternion.Euler(-rotSize.y, rotSize.x, 0.0f);
 
-            Rigidbody body = targetObject.GetComponent<Rigidbody>();
+            Rigidbody body = target.GetComponent<Rigidbody>();
 
-            if (body != null) body.MoveRotation(rot);
-            else targetObject.transform.rotation = rot * targetObject.transform.rotation;
+            if (body != null) body.MoveRotation(rot * target.transform.rotation);
+            else target.transform.rotation = rot * target.transform.rotation;
 
 
         }
