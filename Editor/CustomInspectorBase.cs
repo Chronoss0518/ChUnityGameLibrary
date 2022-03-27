@@ -19,23 +19,9 @@ using UnityEditor;
 
 namespace ChUnity
 {
+    
     public class CustomInspectorBase : Editor
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //CallBack//
-
-        private Dictionary<string, SerializedProperty> serializeProperties = new Dictionary<string, SerializedProperty>();
-
-        protected void SetSerializeProperty(string _propertyName)
-        {
-            serializeProperties[_propertyName] = serializedObject.FindProperty(_propertyName);
-        }
-
-        virtual protected void OnEnable()
-        {
-            
-        }
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //BaseFunction//
@@ -95,6 +81,15 @@ namespace ChUnity
        * @brief 複数のBeginToggleGroupを設置して、終りにEndToggleGroupを置く
        */
         protected void BeginToggleGroup(ref bool _flg, in string _name)
+        {
+            EditorGUILayout.BeginToggleGroup(_name, _flg);
+        }
+
+        /**
+       * @fn void BeginToggleGroup(bool _flg,in string _name)
+       * @brief 複数のBeginToggleGroupを設置して、終りにEndToggleGroupを置く
+       */
+        protected void BeginToggleGroup(bool _flg, in string _name)
         {
             EditorGUILayout.BeginToggleGroup(_name, _flg);
         }
@@ -337,22 +332,6 @@ namespace ChUnity
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //InputField//
 
-        /**
-       * @fn void PropertyField(ref SerializedProperty _object, in string _title, in string _description = "")
-       * @brief Unityで利用されるクラスを設定する
-       */
-        protected void PropertyField(in string _propertyName, in string _title, in string _description = "")
-        {
-            Label(_title);
-            HelpBox(_description);
-
-            serializedObject.Update();
-
-            EditorGUILayout.PropertyField(serializeProperties[_propertyName]);
-
-            serializedObject.ApplyModifiedProperties();
-
-        }
 
         /**
        * @fn void InputField(ref string _val, in string _title, in string _description = "")
@@ -450,7 +429,7 @@ namespace ChUnity
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.ObjectField("", _val, typeof(T), false);
+            _val = EditorGUILayout.ObjectField("", _val, typeof(T), true);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -467,6 +446,55 @@ namespace ChUnity
             _val = EditorGUILayout.EnumPopup("", _val);
         }
 
+        protected void TextPopup(ref int _out , in string[] _stringList, in string _title, in string _description = "")
+        {
+            Label(_title);
+            HelpBox(_description);
+
+            _out = EditorGUILayout.Popup(_out, _stringList);
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //PropertyControl//
+
+        /**
+       * @fn void PropertyField(ref SerializedProperty _object, in string _title, in string _description = "")
+       * @brief Unityで利用されるクラスを設定する
+       */
+        protected void PropertyField(in string _propertyName, in string _title, in string _description = "")
+        {
+            Label(_title);
+            HelpBox(_description);
+
+            serializedObject.Update();
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+
+            EditorGUILayout.PropertyField(property);
+
+            serializedObject.ApplyModifiedProperties();
+
+        }
+
+        protected Object SerializeObjectToObject(in string _propertyName)
+        {
+            serializedObject.Update();
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+
+            return property.objectReferenceValue;
+
+        }
+
+        protected void ObjectToSerializeObject(in string _propertyName,in Object _obj)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+
+            property.objectReferenceValue = _obj;
+            serializedObject.ApplyModifiedProperties();
+
+        }
 
     }
 

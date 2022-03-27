@@ -20,12 +20,6 @@ namespace ChUnity.BattleType
     [CustomEditor(typeof(LifePoint))]
     public class LifePointEditor : CustomInspectorBase
     {
-
-        override protected void OnEnable()
-        {
-            SetSerializeProperty("action");
-        }
-
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
