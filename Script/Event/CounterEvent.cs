@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ChUnity.Common.Event
+namespace ChUnity.Event
 {
     [System.SerializableAttribute]
     public class CountEventObject
     {
         public int count = 0;
         public UnityEngine.Events.UnityEvent events = new UnityEngine.Events.UnityEvent();
+    }
+    
+    [System.SerializableAttribute]
+    public class CounterDictionary : Object
+    {
+        public SortedDictionary<int, List<UnityEngine.Events.UnityEvent>> counter = new SortedDictionary<int, List<UnityEngine.Events.UnityEvent>>();
     }
 
 
@@ -20,6 +26,22 @@ namespace ChUnity.Common.Event
 
         [System.NonSerialized]
         int loopMaxCount = 0;
+
+        public List<CountEventObject> countAction = new List<CountEventObject>();
+
+
+        [SerializeField, HideInInspector]
+        private CounterDictionary useCountAction = new CounterDictionary();
+
+        public CounterDictionary countedAction
+        {
+            get { return useCountAction; }
+            set
+            {
+                if (value == null) return;
+                useCountAction = value;
+            }
+        }
 
         public int GetCount() { return counter; }
 
@@ -48,10 +70,6 @@ namespace ChUnity.Common.Event
             if(counter < 0) counter = loopFlg ? loopMaxCount - 1 : 0;
         }
 
-        public List<CountEventObject> countAction = new List<CountEventObject>();
-
-        private Dictionary<int,List<UnityEngine.Events.UnityEvent>> useCountAction = new Dictionary<int, List<UnityEngine.Events.UnityEvent>>();
-
         // Start is called before the first frame update
         void Start()
         {
@@ -59,11 +77,11 @@ namespace ChUnity.Common.Event
             nowCounter = counter;
             foreach (var actions in countAction)
             {
-                if(!useCountAction.ContainsKey(actions.count))
+                if(!useCountAction.counter.ContainsKey(actions.count))
                 {
-                    useCountAction[actions.count] = new List<UnityEngine.Events.UnityEvent>();
+                    useCountAction.counter[actions.count] = new List<UnityEngine.Events.UnityEvent>();
                 }
-                useCountAction[actions.count].Add(actions.events);
+                useCountAction.counter[actions.count].Add(actions.events);
 
                 if (loopMaxCount < actions.count) loopMaxCount = actions.count;
             }
@@ -76,9 +94,9 @@ namespace ChUnity.Common.Event
         {
             if (counter == nowCounter) return;
 
-            if (!useCountAction.ContainsKey(counter)) return;
+            if (!useCountAction.counter.ContainsKey(counter)) return;
 
-            foreach (var events in useCountAction[counter])
+            foreach (var events in useCountAction.counter[counter])
             {
                 events.Invoke();
             }
