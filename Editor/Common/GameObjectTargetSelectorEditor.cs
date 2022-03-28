@@ -34,13 +34,9 @@ namespace ChUnity.Common
 
             var obj = target as GameObjectTargetSelector;
 
-            var go = SerializeObjectToObject("targetObject");
+            var go = InputField<GameObject>(obj.target, "操作対象のオブジェクト");
 
-            Label(go.name);
-
-            go = InputField<GameObject>(go, "操作対象のオブジェクト");
-
-            ObjectToSerializeObject("targetObject",go);
+            obj.SetTargetObject((GameObject)go);
 
         }
     }
