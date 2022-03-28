@@ -35,7 +35,7 @@ namespace ChUnity.ObjectControl
 
             Object targetObj = obj.baseGameObject;
 
-            InputField<GameObject>(ref targetObj, "オブジェクトを生成する位置の基本となるオブジェクト");
+            targetObj = InputField<GameObject>(targetObj, "オブジェクトを生成する位置の基本となるオブジェクト");
 
             obj.baseGameObject = ((GameObject)targetObj);
 

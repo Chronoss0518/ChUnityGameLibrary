@@ -38,7 +38,7 @@ namespace ChUnity.Common
 
             Label(go.name);
 
-            InputField<GameObject>(ref go, "操作対象のオブジェクト");
+            go = InputField<GameObject>(go, "操作対象のオブジェクト");
 
             ObjectToSerializeObject("targetObject",go);
 

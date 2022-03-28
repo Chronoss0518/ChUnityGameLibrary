@@ -30,6 +30,16 @@ namespace ChUnity
        * @fn void Line()
        * @brief Inspectorを区切るためのラインを作る。
        */
+        protected bool MSGBox(in string _title,in string _description,in string _ok = "OK!",in string _no = "")
+        {
+            if(string.IsNullOrWhiteSpace(_no)) EditorUtility.DisplayDialog(_title, _description, _ok);
+            return EditorUtility.DisplayDialog(_title,_description,_ok,_no);
+        }
+
+        /**
+       * @fn void Line()
+       * @brief Inspectorを区切るためのラインを作る。
+       */
         protected void Line()
         {
             BoxSameWidthInspector(1);
@@ -128,9 +138,9 @@ namespace ChUnity
        * @fn bool IsFoldOut(ref bool _flg, in string _name)
        * @brief 対象のグループを折りたためるようにし、グループが展開されており確認できることを確認する。
        */
-        protected bool IsExtractFoldOut(ref bool _flg, in string _name)
+        protected bool IsExtractFoldOut(in bool _flg, in string _name)
         {
-            return (_flg = EditorGUILayout.Foldout(_flg, _name));
+            return EditorGUILayout.Foldout(_flg, _name);
         }
 
         /**
@@ -146,13 +156,11 @@ namespace ChUnity
        * @fn bool Toggle(ref bool _flg, in string _title, in string _description = "")
        * @brief チェックされていることを確認する
        */
-        protected bool IsTrueToggle(ref bool _flg, in string _title, in string _description = "")
+        protected bool IsTrueToggle(in bool _flg, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _flg = EditorGUILayout.Toggle(_flg);
-
-            return _flg;
+            return EditorGUILayout.Toggle(_flg);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,141 +170,144 @@ namespace ChUnity
        * @fn void Slider(ref float _val, in float _low, in float _high, in string _title, in string _description = "")
        * @brief float型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref float _val, in float _low, in float _high, in string _title, in string _description = "")
+        protected float Slider(in float _val, in float _low, in float _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Slider(_val, _low, _high);
+            return EditorGUILayout.Slider(_val, _low, _high);
         }
 
         /**
        * @fn void Slider(ref int _val, in int _low, in int _high, in string _title, in string _description = "")
        * @brief int型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref int _val, in int _low, in int _high, in string _title, in string _description = "")
+        protected int Slider(in int _val, in int _low, in int _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.IntSlider(_val, _low, _high);
+            return EditorGUILayout.IntSlider(_val, _low, _high);
         }
 
         /**
        * @fn void Slider(ref Vector2 _val, in Vector2 _low, in Vector2 _high, in string _title, in string _description = "")
        * @brief Vector2型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref Vector2 _val, in Vector2 _low, in Vector2 _high, in string _title, in string _description = "")
+        protected Vector2 Slider(in Vector2 _val, in Vector2 _low, in Vector2 _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
 
+            Vector2 res = _val;
+
             BeginHorizontal();
-            Slider(ref _val.x, _low.x, _high.x, "x");
+            res.x = Slider(res.x, _low.x, _high.x, "x");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.y, _low.y, _high.y, "y");
+            res.y = Slider(res.y, _low.y, _high.y, "y");
             EndHorizontal();
-
+            return res;
         }
 
         /**
        * @fn void Slider(ref Vector2Int _val, in Vector2Int _low, in Vector2Int _high, in string _title, in string _description = "")
        * @brief Vector2Int型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref Vector2Int _val, in Vector2Int _low, in Vector2Int _high, in string _title, in string _description = "")
+        protected Vector2Int Slider(in Vector2Int _val, in Vector2Int _low, in Vector2Int _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-
-            int tmp;
-            tmp = _val.x;
+            Vector2Int res = _val;
             BeginHorizontal();
-            Slider(ref tmp, _low.x, _high.x, "x");
+            res.x = Slider(res.x, _low.x, _high.x, "x");
             EndHorizontal();
-            _val.x = tmp;
 
-            tmp = _val.y;
             BeginHorizontal();
-            Slider(ref tmp, _low.y, _high.y, "y");
+            res.y = Slider(res.y, _low.y, _high.y, "y");
             EndHorizontal();
-            _val.y = tmp;
+
+            return res;
         }
 
         /**
        * @fn void Slider(ref Vector3 _val, in Vector3 _low, in Vector3 _high, in string _title, in string _description = "")
        * @brief Vector3型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref Vector3 _val, in Vector3 _low, in Vector3 _high, in string _title, in string _description = "")
+        protected Vector3 Slider(in Vector3 _val, in Vector3 _low, in Vector3 _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
 
+            Vector3 res = _val;
+
             BeginHorizontal();
-            Slider(ref _val.x, _low.x, _high.x, "x");
+            res.x = Slider(res.x, _low.x, _high.x, "x");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.y, _low.y, _high.y, "y");
+            res.y = Slider(res.y, _low.y, _high.y, "y");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.z, _low.z, _high.z, "z");
+            res.z = Slider(res.z, _low.z, _high.z, "z");
             EndHorizontal();
+
+            return res;
         }
 
         /**
        * @fn void Slider(ref Vector3Int _val, in Vector3Int _low, in Vector3Int _high, in string _title, in string _description = "")
        * @brief Vector3Int型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref Vector3Int _val, in Vector3Int _low, in Vector3Int _high, in string _title, in string _description = "")
+        protected Vector3Int Slider(in Vector3Int _val, in Vector3Int _low, in Vector3Int _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
 
-            int tmp;
-            tmp = _val.x;
+            Vector3Int res = _val;
             BeginHorizontal();
-            Slider(ref tmp, _low.x, _high.x, "x");
+            res.x = Slider(res.x, _low.x, _high.x, "x");
             EndHorizontal();
-            _val.x = tmp;
 
-            tmp = _val.y;
             BeginHorizontal();
-            Slider(ref tmp, _low.y, _high.y, "y");
+            res.y = Slider(res.y, _low.y, _high.y, "y");
             EndHorizontal();
-            _val.y = tmp;
 
-            tmp = _val.z;
             BeginHorizontal();
-            Slider(ref tmp, _low.z, _high.z, "z");
+            res.z = Slider(res.z, _low.z, _high.z, "z");
             EndHorizontal();
-            _val.z = tmp;
+
+            return res;
         }
 
         /**
        * @fn void Slider(ref Vector4 _val, in Vector4 _low, in Vector4 _high, in string _title, in string _description = "")
        * @brief Vector4型の値をバーをスライドして調節させる。
        */
-        protected void Slider(ref Vector4 _val, in Vector4 _low, in Vector4 _high, in string _title, in string _description = "")
+        protected Vector4 Slider(in Vector4 _val, in Vector4 _low, in Vector4 _high, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
 
+            Vector4 res = _val;
+
             BeginHorizontal();
-            Slider(ref _val.x, _low.x, _high.x, "x");
+            res.x = Slider(res.x, _low.x, _high.x, "x");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.y, _low.y, _high.y, "y");
+            res.y = Slider(res.y, _low.y, _high.y, "y");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.z, _low.z, _high.z, "z");
+            res.z = Slider(res.z, _low.z, _high.z, "z");
             EndHorizontal();
 
             BeginHorizontal();
-            Slider(ref _val.w, _low.w, _high.w, "w");
+            res.w = Slider(res.w, _low.w, _high.w, "w");
             EndHorizontal();
+
+            return res;
         }
 
         /**
@@ -337,99 +348,100 @@ namespace ChUnity
        * @fn void InputField(ref string _val, in string _title, in string _description = "")
        * @brief Textを入力する
        */
-        protected void InputField(ref string _val, in string _title, in string _description = "")
+        protected string InputField(in string _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.TextField(_val);
+
+            return EditorGUILayout.TextField(_val);
         }
 
         /**
        * @fn void InputField(ref int _val, in string _title, in string _description = "")
        * @brief Intを入力する
        */
-        protected void InputField(ref int _val, in string _title, in string _description = "")
+        protected int InputField(in int _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.IntField(_val);
+            return EditorGUILayout.IntField(_val);
         }
 
         /**
        * @fn void InputField(ref float _val, in string _title, in string _description = "")
        * @brief Intを入力する
        */
-        protected void InputField(ref float _val, in string _title, in string _description = "")
+        protected float InputField(in float _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.FloatField(_val);
+            return EditorGUILayout.FloatField(_val);
         }
 
         /**
        * @fn void InputField(ref Vector2 _val, in string _title, in string _description = "")
        * @brief Vector2を入力する
        */
-        protected void InputField(ref Vector2 _val, in string _title, in string _description = "")
+        protected Vector2 InputField(in Vector2 _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Vector2Field("", _val);
+            return EditorGUILayout.Vector2Field("", _val);
         }
 
         /**
        * @fn void InputField(ref Vector2Int _val, in string _title, in string _description = "")
        * @brief Vector2を入力する
        */
-        protected void InputField(ref Vector2Int _val, in string _title, in string _description = "")
+        protected Vector2Int InputField(in Vector2Int _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Vector2IntField("", _val);
+            return EditorGUILayout.Vector2IntField("", _val);
         }
 
         /**
        * @fn void InputField(ref Vector3 _val, in string _title, in string _description = "")
        * @brief Vector2を入力する
        */
-        protected void InputField(ref Vector3 _val, in string _title, in string _description = "")
+        protected Vector3 InputField(in Vector3 _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Vector3Field("", _val);
+            return EditorGUILayout.Vector3Field("", _val);
         }
 
         /**
        * @fn void InputField(ref Vector3Int _val, in string _title, in string _description = "")
        * @brief Vector2を入力する
        */
-        protected void InputField(ref Vector3Int _val, in string _title, in string _description = "")
+        protected Vector3Int InputField(in Vector3Int _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Vector3IntField("", _val);
+            return EditorGUILayout.Vector3IntField("", _val);
         }
 
         /**
        * @fn void InputField(ref Vector4 _val, in string _title, in string _description = "")
        * @brief Vector2を入力する
        */
-        protected void InputField(ref Vector4 _val, in string _title, in string _description = "")
+        protected Vector4 InputField(Vector4 _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.Vector4Field("", _val);
+            return EditorGUILayout.Vector4Field("", _val);
         }
 
         /**
        * @fn void InputField(ref Object _val, in string _title, in string _description = "")
        * @brief Objectを入力する
        */
-        protected void InputField<T>(ref Object _val, in string _title, in string _description = "")
+        protected Object InputField<T>(in Object _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.ObjectField("", _val, typeof(T), true);
+            return EditorGUILayout.ObjectField("", _val, typeof(T), true);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,21 +451,20 @@ namespace ChUnity
        * @fn void EnumPopup(ref System.Enum _val, in string _title, in string _description = "")
        * @brief Enumを選択させるポップアップを表示
        */
-        protected void EnumPopup(ref System.Enum _val, in string _title, in string _description = "")
+        protected System.Enum EnumPopup(in System.Enum _val, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
-            _val = EditorGUILayout.EnumPopup("", _val);
+            return EditorGUILayout.EnumPopup("", _val);
         }
 
-        protected void TextPopup(ref int _out , in string[] _stringList, in string _title, in string _description = "")
+        protected int TextPopup(in int _selectNum, in string[] _stringList, in string _title, in string _description = "")
         {
             Label(_title);
             HelpBox(_description);
 
-            _out = EditorGUILayout.Popup(_out, _stringList);
+            return EditorGUILayout.Popup(_selectNum, _stringList);
         }
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //PropertyControl//
@@ -477,6 +488,18 @@ namespace ChUnity
 
         }
 
+        protected void PropertyField(in SerializedProperty _prop, in string _title, in string _description = "")
+        {
+            Label(_title);
+            HelpBox(_description);
+
+            _prop.serializedObject.Update();
+
+            EditorGUILayout.PropertyField(_prop);
+
+            _prop.serializedObject.ApplyModifiedProperties();
+
+        }
         protected Object SerializeObjectToObject(in string _propertyName)
         {
             serializedObject.Update();

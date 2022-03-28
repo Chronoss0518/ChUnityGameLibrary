@@ -32,30 +32,20 @@ namespace ChUnity.BattleType
 
             var obj = target as LifePoint;
 
-            {
+            obj.maxLifePoint = Slider(obj.maxLifePoint, obj.lowMaxLifePoint, obj.highMaxLifePoint, "Max Life Point");
 
-                int tmp = obj.maxLifePoint;
-                Slider(ref tmp, obj.lowMaxLifePoint, obj.highMaxLifePoint, "Max Life Point");
-                obj.maxLifePoint = tmp;
+            PropertyField("action", "Death Event");
 
-                PropertyField("action","Death Event");
-            }
 
-            {
+            Label("Set Max Life Point Range");
+            BeginHorizontal();
+            obj.lowMaxLifePoint = InputField(obj.lowMaxLifePoint, "Low:");
+            EndHorizontal();
 
-                int low = obj.lowMaxLifePoint, high = obj.highMaxLifePoint;
-                Label("Set Max Life Point Range");
-                BeginHorizontal();
-                InputField(ref low, "Low:");
-                EndHorizontal();
+            BeginHorizontal();
+            obj.highMaxLifePoint = InputField(obj.highMaxLifePoint, "High:");
+            EndHorizontal();
 
-                BeginHorizontal();
-                InputField(ref high, "High:");
-                EndHorizontal();
-
-                obj.lowMaxLifePoint = low;
-                obj.highMaxLifePoint = high;
-            }
 
 
         }

@@ -24,28 +24,17 @@ namespace ChUnity.BattleType
 
             var obj = target as AttackPoint;
 
-            {
+            obj.attackPoint = Slider(obj.attackPoint, obj.lowAttackPoint, obj.highAttackPoint, "Attack Point");
 
-                int tmp = obj.attackPoint;
-                Slider(ref tmp, obj.lowAttackPoint, obj.highAttackPoint, "Attack Point");
-                obj.attackPoint = tmp;
-            }
+            Label("Set Attack Point Range");
+            BeginHorizontal();
+            obj.lowAttackPoint = InputField(obj.lowAttackPoint, "Low:");
+            EndHorizontal();
 
-            {
+            BeginHorizontal();
+            obj.highAttackPoint = InputField(obj.highAttackPoint, "High:");
+            EndHorizontal();
 
-                int low = obj.lowAttackPoint, high = obj.highAttackPoint;
-                Label("Set Attack Point Range");
-                BeginHorizontal();
-                InputField(ref low, "Low:");
-                EndHorizontal();
-
-                BeginHorizontal();
-                InputField(ref high, "High:");
-                EndHorizontal();
-
-                obj.lowAttackPoint = low;
-                obj.highAttackPoint = high;
-            }
 
         }
     }
