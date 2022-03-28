@@ -15,31 +15,31 @@ using UnityEditor;
 * @brief   Custom InspectorBaseを継承したLifePointのCustomInspector
 */
 
-namespace ChUnity.Event
-{
-    [CustomEditor(typeof(CounterEvent))]
-    public class CounterEventEditor : CustomInspectorBase
-    {
-        /**
-       * @fn public void OnInspectorGUI()
-       * @brief InspectorのGUIを変更する関数。
-       */
-        public override void OnInspectorGUI()
-        {
+//namespace ChUnity.Event
+//{
+//    [CustomEditor(typeof(CounterEvent))]
+//    public class CounterEventEditor : CustomInspectorBase
+//    {
+//        /**
+//       * @fn public void OnInspectorGUI()
+//       * @brief InspectorのGUIを変更する関数。
+//       */
+//        public override void OnInspectorGUI()
+//        {
 
 
-            base.OnInspectorGUI();
+//            base.OnInspectorGUI();
 
-            var obj = target as CounterEvent;
+//            var obj = target as CounterEvent;
 
-            if (obj == null) return;
+//            if (obj == null) return;
 
-            CounterDictionary dic = (CounterDictionary)SerializeObjectToObject("useCountAction");
+//            CounterDictionary dic = (CounterDictionary)SerializeObjectToObject("useCountAction");
 
-            if(dic == null) return;
+//            if(dic == null) return;
 
 
-        }
-    }
+//        }
+//    }
 
-}
+//}
