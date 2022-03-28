@@ -11,6 +11,7 @@ namespace ChUnity._3D_
 
         public void SetNowAnimationNormalizeTime(float _normalizeTime)
         {
+            if (!IsInit()) return;
             if (string.IsNullOrWhiteSpace(motionTimeValueName)) return;
             animator.SetFloat(motionTimeValueName, _normalizeTime);
         }
@@ -18,6 +19,7 @@ namespace ChUnity._3D_
         private void UpdateMotionTime()
         {
 
+            if (!IsInit()) return;
             if (string.IsNullOrWhiteSpace(motionTimeValueName)) return;
             var info = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -30,6 +32,7 @@ namespace ChUnity._3D_
 
         public bool IsPlayAnimation()
         {
+            if (!IsInit()) return false;
             var info = animator.GetCurrentAnimatorStateInfo(0);
 
             return info.normalizedTime >= 1.0f;
@@ -37,21 +40,25 @@ namespace ChUnity._3D_
 
         public void AnimationStop()
         {
+            if (!IsInit()) return;
             animator.enabled = false;
         }
 
         public void AnimationStart()
         {
+            if (!IsInit()) return;
             animator.enabled = true;
         }
 
         public void AnimationPlay(int _stateNo)
         {
+            if (!IsInit()) return;
             animator.Play(_stateNo);
         }
 
         public void AnimationPlay(string _stateName)
         {
+            if (!IsInit()) return;
             animator.Play(_stateName);
         }
 
