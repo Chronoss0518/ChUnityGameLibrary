@@ -10,11 +10,14 @@ namespace ChUnity.Common
         [SerializeField, HideInInspector]
         private GameObject targetObject = null;
 
-        public GameObject target { get { return targetObject; } }
-
-        public void SetTargetObject(in GameObject _obj)
+        public GameObject target 
         {
-            targetObject = _obj;
+            get { return targetObject; }
+            set
+            {
+                if (value == null) return;
+                targetObject = value;
+            }
         }
 
         public void SetParentObject()

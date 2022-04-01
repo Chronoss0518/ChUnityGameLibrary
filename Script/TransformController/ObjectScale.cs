@@ -18,6 +18,8 @@ namespace ChUnity.Transform
             tmpScale.x  = transform.localScale.x > 0.0f ? transform.localScale.x : 0.0f;
             tmpScale.y  = transform.localScale.y > 0.0f ? transform.localScale.y : 0.0f;
             tmpScale.z  = transform.localScale.z > 0.0f ? transform.localScale.z : 0.0f;
+
+            transform.localScale = tmpScale;
         }
 
         public void AddMoveSize(float _mSize) { scaleSize += _mSize; }
@@ -70,7 +72,7 @@ namespace ChUnity.Transform
         void Start()
         {
             if (target != null) return;
-            SetTargetObject(gameObject);
+            target = gameObject;
         }
 
         // Update is called once per frame

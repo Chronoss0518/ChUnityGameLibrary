@@ -21,11 +21,13 @@ namespace ChUnity.BattleType
         /**
          * このスクリプトを持つオブジェクトの攻撃力
         */
+        [SerializeField, HideInInspector]
         protected int atk = 0;
 
         /**
          * このスクリプト全体の最大攻撃力と最低攻撃力
         */
+        [SerializeField, HideInInspector]
         static protected int lATK = 0, hATK = 100;
 
         public int attackPoint { set { atk = (lATK > value ? lATK : (hATK < value ? hATK : value)); } get { return atk; } }

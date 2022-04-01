@@ -25,11 +25,13 @@ namespace ChUnity.BattleType
         /**
          * このスクリプトを持つオブジェクトの最大体力
         */
+        [SerializeField, HideInInspector]
         protected int maxLP = 0;
 
         /**
          * このスクリプト全体の最大体力と最低体力
         */
+        [SerializeField, HideInInspector]
         static protected int lMaxLP = 0, hMaxLP = 100;
 
         [HideInInspector]
@@ -38,6 +40,12 @@ namespace ChUnity.BattleType
         public int maxLifePoint { set { maxLP = value; } get { return maxLP; } }
         public int lowMaxLifePoint { set { lMaxLP = value < hMaxLP ? value : hMaxLP - 1; } get { return lMaxLP; } }
         public int highMaxLifePoint { set { hMaxLP = value > lMaxLP ? value : lMaxLP + 1; } get { return hMaxLP; } }
+
+
+        protected void Start()
+        {
+            lp = maxLP;
+        }
 
         /**
        * @fn void Update()

@@ -40,8 +40,10 @@ namespace ChUnity.ObjectControl
         {
             if (target == null)
             {
-                SetTargetObject(gameObject);
+                target = gameObject;
             }
+
+            if (target == null) return;
 
             flg = target.activeSelf;
         }
@@ -50,6 +52,9 @@ namespace ChUnity.ObjectControl
         void Update()
         {
             Start();
+            
+            
+
         }
     }
 

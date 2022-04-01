@@ -65,6 +65,17 @@ namespace ChUnity.ObjectControl
             Instantiate(target, _targetObjectPosition.transform.position, _targetObjectPosition.transform.rotation);
         }
 
+        private void Start()
+        {
+            if (baseObejct != null) return;
+            baseObejct = gameObject;
+        }
+
+        private void Update()
+        {
+            Start();
+        }
+
         public void LoadObjectBaseUnChild()
         {
             if (target == null) return;

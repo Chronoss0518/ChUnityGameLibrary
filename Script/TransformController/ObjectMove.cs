@@ -7,13 +7,28 @@ namespace ChUnity.Transform
 
     public class ObjectMove : Common.GameObjectTargetSelector
     {
-        public float moveLen = 0.0f;
+        [SerializeField, HideInInspector]
+        private float moveLen = 0.0f;
 
+        public float len
+        {
+            get { return moveLen; }
+            set
+            {
+                if (value < 0.0f) return;
+                moveLen = value;
+            }
+        }
+
+        [HideInInspector]
         public bool normalizeFlg = true;
+
+        [HideInInspector]
         public bool moveDirFlg = true;
 
         private Vector3 dir = Vector3.zero;
 
+        [HideInInspector]
         public Vector3 autoMoveDir = Vector3.zero;
 
         public void AddMoveLen(float _mLen) { moveLen += _mLen; }
@@ -61,7 +76,7 @@ namespace ChUnity.Transform
         void Start()
         {
             if (target != null) return;
-            SetTargetObject(gameObject);
+            target = gameObject;
         }
 
         // Update is called once per frame
@@ -71,6 +86,7 @@ namespace ChUnity.Transform
 
             if (target != null)
             {
+
                 if (moveDirFlg) dir = target.transform.rotation * dir;
                 if (normalizeFlg) dir.Normalize();
 
@@ -83,7 +99,7 @@ namespace ChUnity.Transform
 
             }
 
-            dir = autoMoveDir;
+            dir = autoMoveDir.normalized;
 
         }
     }

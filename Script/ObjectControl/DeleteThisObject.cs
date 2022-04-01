@@ -16,7 +16,7 @@ namespace ChUnity.ObjectControl
         {
             if (target != null) return;
 
-            SetTargetObject(gameObject);
+            target = gameObject;
         }
 
         // Update is called once per frame

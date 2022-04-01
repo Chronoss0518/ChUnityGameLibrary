@@ -12,10 +12,12 @@ namespace ChUnity.Transform
 
     public class ObjectRotate : Common.GameObjectTargetSelector
     {
+        [HideInInspector]
         public float rotSize = 0.0f;
 
         private Quaternion rot = Quaternion.identity;
 
+        [HideInInspector]
         public Axis autoRotateAxis = Axis.none;
 
         public void AddRotSize(float _rot) { rotSize += _rot; }
@@ -64,7 +66,7 @@ namespace ChUnity.Transform
         void Start()
         {
             if (target != null) return;
-            SetTargetObject(gameObject);
+            target = gameObject;
         }
 
         // Update is called once per frame
