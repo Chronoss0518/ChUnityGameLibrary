@@ -22,23 +22,29 @@ namespace ChUnity.ObjectControl
     [CustomEditor(typeof(LoadGameObject))]
     public class LoadGameObjectEditor : Common.GameObjectTargetSelectorEditor
     {
+
+        protected void OnEnable()
+        {
+            targetObjectDescription = "生成するオブジェクト";
+        }
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
 
-            base.OnInspectorGUI();
+            var obj = base.InspectorGUI() as LoadGameObject;
 
-            var obj = target as LoadGameObject;
+            obj.baseGameObject = (GameObject)InputField<GameObject>(obj.baseGameObject, "オブジェクトを生成する位置の基本となるオブジェクト");
 
-            Object targetObj = obj.baseGameObject;
+            BeginObjectUpdate();
 
-            targetObj = InputField<GameObject>(targetObj, "オブジェクトを生成する位置の基本となるオブジェクト");
-            
-            obj.baseGameObject = ((GameObject)targetObj);
+            UpdateProperty(obj.baseGameObject, "baseObejct");
 
+            EndObjectUpdate();
+
+            return obj;
         }
     }
 

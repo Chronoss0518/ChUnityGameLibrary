@@ -2,7 +2,7 @@
 * @file ObjectActivityEditor.cs
 * @brief ObjectActivityスクリプトのInspectorをカスタマイズしたもの
 * @author Chronoss0518
-* @date 2022/01/02
+* @date 2022/03/29
 * @details ObjectActivityスクリプトを操作しやすいようにInspectorをカスタマイズしたもの
 */
 
@@ -22,23 +22,18 @@ namespace ChUnity.ObjectControl
     public class ObjectActivityEditor : Common.GameObjectTargetSelectorEditor
     {
 
+        private void OnEnable()
+        {
+            targetObjectDescription = "有効・無効を操作する対象オブジェクト";
+        }
+
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
-
-            base.OnInspectorGUI();
-
-            var obj = target as LoadGameObject;
-
-            Object targetObj = obj.baseGameObject;
-
-            targetObj = InputField<GameObject>(targetObj, "オブジェクトを生成する位置の基本となるオブジェクト");
-
-            obj.baseGameObject = ((GameObject)targetObj);
-
+            return base.InspectorGUI();
         }
     }
 

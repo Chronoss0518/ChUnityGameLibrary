@@ -23,13 +23,17 @@ namespace ChUnity.ObjectControl
     public class DeleteThisObjectEditor : Common.GameObjectTargetSelectorEditor
     {
 
+        protected void OnEnable()
+        {
+            targetObjectDescription = "削除対象のオブジェクト";
+        }
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
-            base.OnInspectorGUI();
+            return base.InspectorGUI();
         }
     }
 

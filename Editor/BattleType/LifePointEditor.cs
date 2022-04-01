@@ -24,11 +24,8 @@ namespace ChUnity.BattleType
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
-
-
-            base.OnInspectorGUI();
 
             var obj = target as LifePoint;
 
@@ -47,6 +44,17 @@ namespace ChUnity.BattleType
             EndHorizontal();
 
 
+            BeginObjectUpdate();
+
+            UpdateProperty(obj.maxLifePoint, "maxLP");
+
+            UpdateProperty(obj.lowMaxLifePoint, "lMaxLP");
+
+            UpdateProperty(obj.highMaxLifePoint, "hMaxLP");
+
+            EndObjectUpdate();
+
+            return obj;
 
         }
     }

@@ -17,11 +17,8 @@ namespace ChUnity.BattleType
     [CustomEditor(typeof(AttackPoint))]
     public class AttackPointEditor : CustomInspectorBase
     {
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
-
-            base.OnInspectorGUI();
-
             var obj = target as AttackPoint;
 
             obj.attackPoint = Slider(obj.attackPoint, obj.lowAttackPoint, obj.highAttackPoint, "Attack Point");
@@ -35,7 +32,17 @@ namespace ChUnity.BattleType
             obj.highAttackPoint = InputField(obj.highAttackPoint, "High:");
             EndHorizontal();
 
+            BeginObjectUpdate();
 
+            UpdateProperty(obj.attackPoint, "atk");
+            
+            UpdateProperty(obj.lowAttackPoint, "lATK");
+
+            UpdateProperty(obj.highAttackPoint, "hATK");
+
+            EndObjectUpdate();
+
+            return obj;
         }
     }
 

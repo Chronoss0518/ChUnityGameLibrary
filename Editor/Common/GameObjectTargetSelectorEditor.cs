@@ -2,7 +2,7 @@
 * @file GameObjectTargetSelectorEditor.cs
 * @brief GameObjectTargetSelectorスクリプトのInspectorをカスタマイズしたもの
 * @author Chronoss0518
-* @date 2022/01/02
+* @date 2022/03/29
 * @details GameObjectTargetSelectorスクリプトを操作しやすいようにInspectorをカスタマイズしたもの
 */
 
@@ -23,21 +23,20 @@ namespace ChUnity.Common
     public class GameObjectTargetSelectorEditor : CustomInspectorBase
     {
 
+        protected string targetObjectDescription = "操作対象のオブジェクト";
+
         /**
        * @fn public void OnInspectorGUI()
        * @brief InspectorのGUIを変更する関数。
        */
-        public override void OnInspectorGUI()
+        public override Object InspectorGUI()
         {
-
-            base.OnInspectorGUI();
 
             var obj = target as GameObjectTargetSelector;
 
-            var go = InputField<GameObject>(obj.target, "操作対象のオブジェクト");
+            obj.target = (GameObject)InputField<GameObject>(obj.target, targetObjectDescription);
 
-            obj.SetTargetObject((GameObject)go);
-
+            return obj;
         }
     }
 

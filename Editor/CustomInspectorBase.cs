@@ -10,6 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 /**
 * @brief   Editorを継承したCustom Inspectorの開発を容易にするためのクラス。
@@ -19,8 +21,7 @@ using UnityEditor;
 
 namespace ChUnity
 {
-    
-    public class CustomInspectorBase : Editor
+    public abstract class CustomInspectorBase : Editor
     {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,10 +31,10 @@ namespace ChUnity
        * @fn void Line()
        * @brief Inspectorを区切るためのラインを作る。
        */
-        protected bool MSGBox(in string _title,in string _description,in string _ok = "OK!",in string _no = "")
+        protected bool MSGBox(in string _title, in string _description, in string _ok = "OK!", in string _no = "")
         {
-            if(string.IsNullOrWhiteSpace(_no)) EditorUtility.DisplayDialog(_title, _description, _ok);
-            return EditorUtility.DisplayDialog(_title,_description,_ok,_no);
+            if (string.IsNullOrWhiteSpace(_no)) EditorUtility.DisplayDialog(_title, _description, _ok);
+            return EditorUtility.DisplayDialog(_title, _description, _ok, _no);
         }
 
         /**
@@ -85,6 +86,32 @@ namespace ChUnity
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //PairFunctions//
+
+        public sealed override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            
+            EditorGUI.BeginChangeCheck();
+
+            Object _target = InspectorGUI();
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(_target);
+            }
+        }
+
+        public abstract Object InspectorGUI();
+
+        protected void BeginObjectUpdate()
+        {
+            serializedObject.Update();
+        }
+
+        protected void EndObjectUpdate()
+        {
+            serializedObject.ApplyModifiedProperties();
+        }
 
         /**
        * @fn void BeginToggleGroup(ref bool _flg,in string _name)
@@ -510,7 +537,7 @@ namespace ChUnity
 
         }
 
-        protected void ObjectToSerializeObject(in string _propertyName,in Object _obj)
+        protected void ObjectToSerializeObject(in string _propertyName, in Object _obj)
         {
             SerializedProperty property = serializedObject.FindProperty(_propertyName);
 
@@ -518,6 +545,129 @@ namespace ChUnity
             serializedObject.ApplyModifiedProperties();
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //UpdateFunction//
+
+        protected void UpdateProperty(in int _value, in string _propertyName)
+        {
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.intValue = _value;
+        }
+
+        protected void UpdateProperty(in string _value, in string _propertyName)
+        {
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.stringValue = _value;
+        }
+        protected void UpdateProperty(in bool _value, in string _propertyName)
+        {
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.boolValue = _value;
+        }
+
+        protected void UpdateProperty(in long _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.longValue =_value;
+        }
+        protected void UpdateProperty(in float _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.floatValue = _value;
+        }
+
+        protected void UpdateProperty(in double _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            property.doubleValue = _value;
+        }
+
+        protected void UpdateProperty(in Object _value, in string _propertyName)
+        {
+
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.objectReferenceValue = _value;
+        }
+
+        protected void UpdateProperty(in Bounds _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            property.boundsValue = _value;
+        }
+
+        protected void UpdateProperty(in BoundsInt _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.boundsIntValue = _value;
+        }
+
+        protected void UpdateProperty(in Color _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.colorValue = _value;
+        }
+
+        protected void UpdateProperty(in Rect _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.rectValue =_value;
+        }
+
+        protected void UpdateProperty(in RectInt _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.rectIntValue =_value;
+        }
+
+        protected void UpdateProperty(in Vector2Int _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.vector2IntValue =_value;
+        }
+
+        protected void UpdateProperty(in Vector2 _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.vector2Value =_value;
+        }
+
+        protected void UpdateProperty(in Vector3Int _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.vector3IntValue =_value;
+        }
+
+        protected void UpdateProperty(in Vector3 _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.vector3Value =_value;
+        }
+
+        protected void UpdateProperty(in Vector4 _value, in string _propertyName)
+        {
+            SerializedProperty property = serializedObject.FindProperty(_propertyName);
+            if (property == null) return;
+            property.vector4Value =_value;
+        }
+
 
     }
 
