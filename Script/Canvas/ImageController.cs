@@ -6,7 +6,7 @@ public class ImageController : MonoBehaviour
 {
     public UnityEngine.UI.Image target = null;
 
-    public List<Texture>textureList = new List<Texture>();
+    public List<Texture2D>textureList = new List<Texture2D>();
 
     public void SetTexture(int _no)
     {
