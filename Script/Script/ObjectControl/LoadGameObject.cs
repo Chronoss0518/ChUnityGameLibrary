@@ -6,7 +6,7 @@ namespace ChUnity.ObjectControl
 {
     public class LoadGameObject : Common.GameObjectTargetSelector
     {
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private GameObject baseObejct = null;
 
         public GameObject baseGameObject
