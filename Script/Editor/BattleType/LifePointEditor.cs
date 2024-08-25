@@ -45,6 +45,7 @@ namespace ChUnity.BattleType
             if (!obj.isSetRange)
             {
                 Label("LifePointRangeがセットされていません");
+                HelpBox("メニューのAssets/Create/BattleTypeRangeからLifePointを選んび、作成したオブジェクトをrangeにセットしてください。");
                 return;
             }
 

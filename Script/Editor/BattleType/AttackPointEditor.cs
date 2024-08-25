@@ -33,12 +33,13 @@ namespace ChUnity.BattleType
 
             Label("Set Attack Point Range");
             InputField(range, "");
-
+            
             var obj = target as AttackPoint;
 
             if (!obj.isSetRange)
             {
                 Label("AttackPointRangeがセットされていません");
+                HelpBox("メニューのAssets/Create/BattleTypeRangeからAttackPointを選んび、作成したオブジェクトをrangeにセットしてください。");
                 return;
             }
 
