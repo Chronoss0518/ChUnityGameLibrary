@@ -20,6 +20,7 @@ namespace ChUnity.Event
     [CustomEditor(typeof(CounterEvent))]
     public class CounterEventEditor : CustomInspectorBase
     {
+        SerializedProperty counter;
 
         SerializedProperty loopFlg;
         SerializedProperty loopMaxCount;
@@ -28,6 +29,8 @@ namespace ChUnity.Event
 
         void OnEnable()
         {
+            counter = serializedObject.FindProperty("counter");
+
             loopFlg = serializedObject.FindProperty("loopFlg");
             loopMaxCount = serializedObject.FindProperty("loopMaxCount");
 
@@ -36,12 +39,8 @@ namespace ChUnity.Event
 
         public override void UpdateInspectorGUI()
         {
-
-            var obj = target as CounterEvent;
-
-            Label("CounterÇÃåªç›íl[" + obj.counter.ToString() +"]");
             
-            InputField(countAction, "useCountAction");
+            InputField(counter, "counter");
 
             InputField(loopFlg, "loopFlg");
 
@@ -49,6 +48,8 @@ namespace ChUnity.Event
             {
                 InputField(loopMaxCount, "loopMaxCount");
             }
+
+            InputField(countAction, "useCountAction");
 
         }
 
