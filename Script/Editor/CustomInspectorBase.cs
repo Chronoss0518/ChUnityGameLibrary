@@ -377,11 +377,20 @@ namespace ChUnity
        */
         protected void InputField(SerializedProperty _property, in string _title, in string _description = "")
         {
-            if(_title != "") Label(_title);
+            var tmpTitle = _title;
+            if (tmpTitle == "") tmpTitle = _property.name;
+
             if (_description != "") HelpBox(_description);
+            EditorGUILayout.PropertyField(_property, new GUIContent(tmpTitle));
+        }
 
-            EditorGUILayout.PropertyField(_property);
-
+        protected void InputFieldTitleLabel(SerializedProperty _property, in string _title, in string _description = "")
+        {
+            var tmpTitle = _title;
+            if (tmpTitle == "") tmpTitle = _property.name;
+            Label(tmpTitle);
+            if (_description != "") HelpBox(_description);
+            EditorGUILayout.PropertyField(_property, new GUIContent(""));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
