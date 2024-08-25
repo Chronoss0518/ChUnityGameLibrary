@@ -47,6 +47,8 @@ namespace ChUnity.Transform
        */
         public override void UpdateInspectorGUI()
         {
+            base.UpdateInspectorGUI();
+
             InputField(moveLen, "移動速度");
 
             InputField(normalizeFlg, "移動する際に正規化(ベクトルの長さを1にすること)を行うかのフラグ");

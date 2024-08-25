@@ -15,9 +15,13 @@ namespace ChUnity.Event
     public class CounterEvent : MonoBehaviour
     {
         int nowCounter { get; set; } = 0;
-        public int counter { get; private set; } = 0;
+ 
+        [SerializeField]
+        private int counter  = 0;
+
         public bool loopFlg = false;
 
+        [SerializeField]
         int loopMaxCount = 0;
 
         public int GetCount() { return counter; }
