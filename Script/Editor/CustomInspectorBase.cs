@@ -380,7 +380,7 @@ namespace ChUnity
             var tmpTitle = _title;
             if (tmpTitle == "") tmpTitle = _property.name;
 
-            if (_description != "") HelpBox(_description);
+            if (_description != "") HelpBox(_description); 
             EditorGUILayout.PropertyField(_property, new GUIContent(tmpTitle));
         }
 
@@ -388,6 +388,7 @@ namespace ChUnity
         {
             var tmpTitle = _title;
             if (tmpTitle == "") tmpTitle = _property.name;
+
             Label(tmpTitle);
             if (_description != "") HelpBox(_description);
             EditorGUILayout.PropertyField(_property, new GUIContent(""));
