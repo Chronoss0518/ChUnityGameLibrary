@@ -33,8 +33,8 @@ namespace ChUnity.Transform
             }
         }
 
+        [SerializeField]
         AxisFlg axisFlg = AxisFlg.X | AxisFlg.Y | AxisFlg.Z;
-
 
         private void Start()
         {

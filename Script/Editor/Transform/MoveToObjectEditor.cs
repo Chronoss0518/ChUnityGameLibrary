@@ -29,9 +29,11 @@ namespace ChUnity.Transform
 
         protected override void OnEnable()
         {
+            base.OnEnable();
+
             targetObjectDescription = "移動するオブジェクト";
 
-            moveToTarget = serializedObject.FindProperty("targetObject");
+            moveToTarget = serializedObject.FindProperty("moveToTarget");
             moveSpeed = serializedObject.FindProperty("moveSpeed");
 
             axisFlg = serializedObject.FindProperty("axisFlg");
