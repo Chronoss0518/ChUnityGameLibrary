@@ -23,8 +23,7 @@ namespace ChUnity.BattleType
         SerializedProperty maxLP;
         SerializedProperty action;
 
-        SerializedProperty lMaxLP;
-        SerializedProperty hMaxLP;
+        SerializedProperty range;
         int tmpMaxLP = 0;
 
         void OnEnable()
@@ -32,26 +31,26 @@ namespace ChUnity.BattleType
             maxLP = serializedObject.FindProperty("maxLP");
             action = serializedObject.FindProperty("action");
 
-            lMaxLP = serializedObject.FindProperty("lMaxLP");
-            hMaxLP = serializedObject.FindProperty("hMaxLP");
+            range = serializedObject.FindProperty("range");
 
         }
 
         public override void UpdateInspectorGUI()
         {
-            tmpMaxLP = Slider(maxLP.intValue, lMaxLP.intValue, hMaxLP.intValue, "Max Life Point");
+            Label("Set Life Point Range");
+            InputField(range, "");
+
+            var obj = target as LifePoint;
+
+            if (!obj.isSetRange)
+            {
+                Label("LifePointRangeがセットされていません");
+                return;
+            }
+
+            tmpMaxLP = Slider(maxLP.intValue, obj.lMaxLP, obj.hMaxLP, "Max Life Point");
 
             InputField(action, "On Death Action");
-
-            Label("Set Life Point Range");
-
-            BeginHorizontal();
-            InputField(lMaxLP, "Low:");
-            EndHorizontal();
-
-            BeginHorizontal();
-            InputField(hMaxLP, "High:");
-            EndHorizontal();
 
         }
 

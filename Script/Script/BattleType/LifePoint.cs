@@ -37,6 +37,8 @@ namespace ChUnity.BattleType
 
         public UnityEngine.Events.UnityEvent action = new UnityEngine.Events.UnityEvent();
 
+        public bool isSetRange { get { return range != null; } }
+
         public int maxLifePoint
         {
             set
@@ -45,6 +47,10 @@ namespace ChUnity.BattleType
             }
             get { return maxLP; }
         }
+
+        public int lMaxLP { get { return range != null ? range.lMaxLP : 0; } }
+        public int hMaxLP { get { return range != null ? range.hMaxLP : 0xffff; } }
+
         protected void Start()
         {
             lp = maxLP;
