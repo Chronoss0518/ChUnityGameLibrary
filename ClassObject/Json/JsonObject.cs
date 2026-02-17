@@ -7,7 +7,7 @@ namespace ChJson
     public class JsonObject : JsonBaseType
     {
         public const char START_CHAR = '{';
-        public const char END_CHAR = ']';
+        public const char END_CHAR = '}';
         public const char CUT_CHAR = ',';
         public const char KEY_VALUE_CUT_CHAR = ':';
 
