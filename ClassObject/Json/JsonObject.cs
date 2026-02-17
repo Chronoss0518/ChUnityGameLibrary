@@ -13,6 +13,7 @@ namespace ChJson
 
         public override bool SetRawData(string _text)
         {
+            if (_text.Length < 2) return false;
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;
@@ -46,7 +47,22 @@ namespace ChJson
 
         public override string GetRawData()
         {
-            return "";
+            string res = "";
+
+            int count = 0;
+
+            foreach (var keyValues in values)
+            {
+                res += keyValues.Key.GetRawData();
+                res += KEY_VALUE_CUT_CHAR;
+                res += keyValues.Value.GetRawData();
+                if (count < values.Count - 1)
+                    res += CUT_CHAR;
+
+                count++;
+            }
+
+            return res;
         }
 
         class keyValue
