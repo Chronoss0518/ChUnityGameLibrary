@@ -10,10 +10,12 @@ namespace ChJson
 
         static public bool operator ==(JsonString _val, string _str)
         {
+            if(_val is null) return false;
             return _str == _val.val;
         }
         static public bool operator !=(JsonString _val, string _str)
         {
+            if (_val is null) return false;
             return _str != _val.val;
         }
 
@@ -30,6 +32,8 @@ namespace ChJson
         public void Set(string _val) { val = _val; }
 
         public string Get() { return val; }
+
+        public bool Is(string _str) { return val == _str; }
 
         public override bool SetRawData(string _text)
         {

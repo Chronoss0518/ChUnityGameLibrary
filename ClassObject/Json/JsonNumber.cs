@@ -7,10 +7,12 @@ namespace ChJson
     {
         static public bool operator ==(JsonNumber _val, double _num)
         {
+            if (_val is null) return false;
             return _num == _val.val;
         }
         static public bool operator !=(JsonNumber _val, double _num)
         {
+            if (_val is null) return true;
             return _num != _val.val;
         }
 
@@ -29,6 +31,10 @@ namespace ChJson
         public double GetDouble() { return val; }
 
         public int GetInt() { return (int)val; }
+
+        public bool Is(int _val) { return _val == (int)val; }
+
+        public bool Is(double _val) { return _val == val; }
 
         public override bool SetRawData(string _text)
         {
