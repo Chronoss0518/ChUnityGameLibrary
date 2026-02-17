@@ -122,12 +122,16 @@ namespace ChJson
         {
             string res = "";
 
+            res += START_CHAR;
+
             for(int i =  0;i< arrayVal.Count;i++)
             {
                 res += arrayVal[i].GetRawData();
                 if (i < arrayVal.Count - 1)
                     res += CUT_CHAR;
             }
+
+            res += END_CHAR;
 
             return res;
         }

@@ -51,6 +51,8 @@ namespace ChJson
         {
             string res = "";
 
+            res += START_CHAR;
+
             int count = 0;
 
             foreach (var keyValues in values)
@@ -63,6 +65,8 @@ namespace ChJson
 
                 count++;
             }
+
+            res += END_CHAR;
 
             return res;
         }
