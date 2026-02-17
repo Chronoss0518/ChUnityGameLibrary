@@ -17,13 +17,15 @@ namespace ChJson
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;
-            if (!GetCutTextList(out textList, _text)) return false;
+            if (!GetCutTextList(out textList, text)) return false;
 
             bool successFlg = true;
 
             for(int i = 0;i < textList.Count;i++)
             {
                 var keyValue = CutKeyValue(textList[i]);
+                if (keyValue == null) continue;
+
                 var key = new JsonString();
                 if(!key.SetRawData(keyValue.key))
                 {
@@ -85,7 +87,7 @@ namespace ChJson
 
                 keyValue res = new keyValue();
 
-                res.key = _val.Substring(0, i - 1);
+                res.key = _val.Substring(0, i);
                 res.value = _val.Substring(i + 1);
 
                 return res;
