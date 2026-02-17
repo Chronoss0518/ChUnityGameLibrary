@@ -23,7 +23,7 @@ static public class StringExMethod
     {
         string res = "";
 
-        for (int i = 0; i < res.Length; i++) 
+        for (int i = 0; i < _val.Length; i++) 
         {
             char c = _val[i];
 
