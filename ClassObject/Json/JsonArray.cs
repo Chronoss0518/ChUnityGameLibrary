@@ -107,7 +107,7 @@ namespace ChJson
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;
-            if(!GetCutTextList(out textList, _text))return false;
+            if(!GetCutTextList(out textList, text))return false;
 
             for (int i = 0; i < textList.Count; i++)
             {
