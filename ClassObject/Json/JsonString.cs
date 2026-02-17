@@ -40,13 +40,13 @@ namespace ChJson
             if (_text.Length < 2) return false;
             if (_text[0] != START_END || _text[_text.Length - 1] != START_END) return false;
             string testText = _text.Substring(1, _text.Length - 2);
-            val = testText.StringFromEscapeSequence();
+            val = testText.StringToEscapeSequence();
             return true;
         }
 
         public override string GetRawData()
         {
-            return START_END + val.StringToEscapeSequence() + START_END;
+            return START_END + val.StringFromEscapeSequence() + START_END;
         }
 
         string val = "";
