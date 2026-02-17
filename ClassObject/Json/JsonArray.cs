@@ -103,6 +103,7 @@ namespace ChJson
 
         public override bool SetRawData(string _text)
         {
+            if (_text.Length < 2) return false;
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;

@@ -37,6 +37,7 @@ namespace ChJson
 
         public override bool SetRawData(string _text)
         {
+            if (_text.Length < 2) return false;
             if (_text[0] != START_END || _text[_text.Length - 1] != START_END) return false;
             string testText = _text.Substring(1, _text.Length - 3);
             val = testText.StringFromEscapeSequence();
