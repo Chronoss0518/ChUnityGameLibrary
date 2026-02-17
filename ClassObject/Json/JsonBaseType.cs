@@ -72,59 +72,26 @@ namespace ChJson
                     if (_text[i] <= 0x20) continue;
                 }
 
+                if (_text[i] == JsonString.START_END)inString = !inString;
+
+                if (_text[i] == JsonArray.START_CHAR)inArray++;
+                if (_text[i] == JsonObject.START_CHAR)inObject++;
+
+                if (_text[i] == JsonArray.END_CHAR)inArray--;
+                if (_text[i] == JsonObject.END_CHAR)inObject--;
+
+                if (!inString && inArray <= 0 && inObject <= 0)
+                {
+                    if (_text[i] == JsonArray.CUT_CHAR || _text[i] == JsonObject.CUT_CHAR)
+                    {
+                        _res.Add(tmp);
+                        tmp = "";
+                        continue;
+                    }
+
+                }
+
                 tmp += _text[i];
-
-                if (_text[i] == JsonString.START_END)
-                {
-                    if(inString)
-                    {
-                        _res.Add(tmp);
-                        tmp = "";
-                    }
-                    inString = !inString;
-                }
-
-                if (inString) continue;
-
-
-                if (_text[i] == JsonArray.START_CHAR)
-                {
-                    inArray++;
-                }
-
-                if (_text[i] == JsonArray.END_CHAR)
-                {
-                    inArray--;
-                    if(inArray <= 0 && inObject<=0)
-                    {
-                        _res.Add(tmp);
-                        tmp = "";
-                    }
-                }
-
-                if (_text[i] == JsonObject.START_CHAR)
-                {
-                    inObject++;
-                }
-
-                if (_text[i] == JsonObject.END_CHAR)
-                {
-                    inObject--;
-                    if (inArray <= 0 && inObject<=0)
-                    {
-                        _res.Add(tmp);
-                        tmp = "";
-                    }
-                }
-
-                if (inArray > 0 || inObject > 0) continue;
-
-                if (_text[i] == JsonArray.CUT_CHAR || _text[i] == JsonObject.CUT_CHAR)
-                {
-                    tmp.Remove(tmp.Length - 1);
-                    _res.Add(tmp);
-                    tmp = "";
-                }
             }
 
             return true;
