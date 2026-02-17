@@ -15,6 +15,12 @@ namespace ChJson
             if (res.SetRawData(_text)) return res;
             res = new JsonNumber();
             if (res.SetRawData(_text)) return res;
+            res = new JsonString();
+            if (res.SetRawData(_text)) return res;
+            res = new JsonArray();
+            if (res.SetRawData(_text)) return res;
+            res = new JsonObject();
+            if (res.SetRawData(_text)) return res;
 
             return null;
         }
