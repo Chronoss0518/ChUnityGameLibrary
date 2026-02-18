@@ -11,6 +11,126 @@ namespace ChJson
         public const char CUT_CHAR = ',';
         public const char KEY_VALUE_CUT_CHAR = ':';
 
+        public void Set(JsonBaseType _obj, string _key)
+        {
+            if (_obj == null) _obj = new JsonNull();
+
+            values[new JsonString(_key)] = _obj;
+        }
+
+        public JsonBaseType Get(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return values[key];
+        }
+
+        public bool GetBool(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return false;
+
+            var flg = (JsonBoolean)values[key];
+            if (flg == null) return false;
+
+            return flg.Get();
+        }
+
+        public string GetString(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return "";
+
+            var str = (JsonString)values[key];
+            if (str == null) return "";
+
+            return str.Get();
+        }
+
+        public double GetNumberDouble(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return 0.0;
+
+            var num = (JsonNumber)values[key];
+            if (num == null) return 0.0;
+
+            return num.GetDouble();
+        }
+
+        public int GetNumberInt(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return 0;
+
+            var num = (JsonNumber)values[key];
+            if (num == null) return 0;
+
+            return num.GetInt();
+        }
+
+        public JsonArray GetArray(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return (JsonArray)values[key];
+        }
+
+        public JsonObject GetObject(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return (JsonObject)values[key];
+        }
+
+        public void Add(JsonBaseType _obj, string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (_obj == null) _obj = new JsonNull();
+            values[key] = _obj;
+        }
+
+        public void Add(string _str, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key] = new JsonString(_str);
+        }
+
+        public void Add(double _num, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key]= new JsonNumber(_num);
+        }
+
+        public void Add(bool _flg, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key] = new JsonBoolean(_flg);
+        }
+
+        public void Remove(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return;
+
+            values.Remove(key);
+        }
+
         public override bool SetRawData(string _text)
         {
             if (_text.Length < 2) return false;
