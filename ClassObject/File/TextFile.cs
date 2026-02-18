@@ -4,6 +4,11 @@ namespace ChStd
 {
     public class TextFile : FileBase
     {
+        ~TextFile()
+        {
+            Close();
+        }
+
         public override void Open(string _fileName, bool _updateFlg = false)
         {
             if (isOpen) return;
