@@ -1,3 +1,4 @@
+using UnityEngine;
 
 namespace ChStd
 {
@@ -15,12 +16,15 @@ namespace ChStd
             isOpen = false;
         }
 
-        protected string fileName { get; private set; } = "";
+        public string fileName { get; private set; } = "";
+
+        public bool isOpen { get; private set; } = false;
+
+        protected string absolutePath { get { return Application.persistentDataPath + "/" + fileName; } }
 
         //FileのClose自にFileの内容を更新するかしないかのフラグ//
         protected bool updateFlg { get; private set; } = false;
 
-        public bool isOpen { get; private set; } = false;
     }
 
 }

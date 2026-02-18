@@ -1,4 +1,3 @@
-using UnityEngine;
 using System.IO;
 
 namespace ChStd
@@ -13,7 +12,7 @@ namespace ChStd
 
             try
             {
-                var reader = new StreamReader(Application.persistentDataPath + fileName, false);
+                var reader = new StreamReader(absolutePath, false);
 
                 text = reader.ReadToEnd();
 
@@ -36,7 +35,7 @@ namespace ChStd
 
             if (updateFlg)
             {
-                var writer = new StreamWriter(Application.persistentDataPath + fileName, false);
+                var writer = new StreamWriter(absolutePath, false);
 
                 writer.Write(text);
 
