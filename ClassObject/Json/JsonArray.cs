@@ -19,13 +19,12 @@ namespace ChJson
             arrayVal[_index] = _obj;
         }
 
-        public JsonBaseType GetObj(int _index)
+        public JsonBaseType Get(int _index)
         {
             if (!IsInArrayRangeNum(_index)) return null;
 
             return arrayVal[_index];
         }
-
 
         public bool GetBool(int _index)
         {
@@ -67,6 +66,13 @@ namespace ChJson
             return num.GetInt();
         }
 
+        public JsonArray GetArray(int _index)
+        {
+            if (!IsInArrayRangeNum(_index)) return null;
+
+            return (JsonArray)arrayVal[_index];
+        }
+
         public JsonObject GetObject(int _index)
         {
             if (!IsInArrayRangeNum(_index)) return null;
@@ -99,6 +105,13 @@ namespace ChJson
             var flg = new JsonBoolean();
             flg.Set(_flg);
             arrayVal.Add(flg);
+        }
+
+        public void RemoveAt(int _index)
+        {
+            if (!IsInArrayRangeNum(_index)) return;
+
+            arrayVal.RemoveAt(_index);
         }
 
         public override bool SetRawData(string _text)
