@@ -150,6 +150,16 @@ namespace ChJson
             values.Remove(key);
         }
 
+        public bool IsContainsKey(string _key)
+        {
+            return values.ContainsKey(new JsonString(_key));
+        }
+
+        public bool IsContainsValue(JsonBaseType _value)
+        {
+            return values.ContainsValue(_value);
+        }
+
         public override bool SetRawData(string _text)
         {
             if (_text.Length < 2) return false;
