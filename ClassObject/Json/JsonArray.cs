@@ -88,23 +88,17 @@ namespace ChJson
 
         public void Add(string _str)
         {
-            var str = new JsonString();
-            str.Set(_str);
-            arrayVal.Add(str);
+            arrayVal.Add(new JsonString(_str));
         }
 
         public void Add(double _num)
         {
-            var num = new JsonNumber();
-            num.Set(_num);
-            arrayVal.Add(num);
+            arrayVal.Add(new JsonNumber(_num));
         }
 
         public void Add(bool _flg)
         {
-            var flg = new JsonBoolean();
-            flg.Set(_flg);
-            arrayVal.Add(flg);
+            arrayVal.Add(new JsonBoolean(_flg));
         }
 
         public void RemoveAt(int _index)
