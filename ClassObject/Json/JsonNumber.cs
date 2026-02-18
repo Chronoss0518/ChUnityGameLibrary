@@ -37,8 +37,6 @@ namespace ChJson
 
         public int GetInt() { return (int)val; }
 
-        public bool Is(int _val) { return _val == (int)val; }
-
         public bool Is(double _val) { return _val == val; }
 
         public override bool SetRawData(string _text)
