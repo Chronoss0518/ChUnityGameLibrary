@@ -8,6 +8,13 @@ namespace ChJson
     {
         public const char START_END = '\"';
 
+        public JsonString() { val = ""; }
+
+        public JsonString(string _val)
+        {
+            val = _val;
+        }
+
         static public bool operator ==(JsonString _val, string _str)
         {
             if(_val is null) return false;

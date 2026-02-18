@@ -5,6 +5,11 @@ namespace ChJson
     [Serializable]
     public class JsonNumber : JsonBaseType
     {
+
+        public JsonNumber() { val = 0.0; }
+
+        public JsonNumber(double _val) { val = _val; }
+
         static public bool operator ==(JsonNumber _val, double _num)
         {
             if (_val is null) return false;

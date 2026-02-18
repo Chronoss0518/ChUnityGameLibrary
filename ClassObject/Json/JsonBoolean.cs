@@ -9,6 +9,13 @@ namespace ChJson
         const string TRUE = "true";
         const string FALSE = "false";
 
+        public JsonBoolean() { flg = false; }
+
+        public JsonBoolean(bool _flg)
+        {
+            flg = _flg;
+        }
+
         static public bool operator ==(JsonBoolean _val, bool _flg)
         {
             if (_val is null) return false;
