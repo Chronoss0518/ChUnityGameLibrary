@@ -6,9 +6,9 @@ namespace ChJson
     public class JsonNumber : JsonBaseType
     {
 
-        public JsonNumber() { val = 0.0; }
+        public JsonNumber() { Set(0.0); }
 
-        public JsonNumber(double _val) { val = _val; }
+        public JsonNumber(double _val) { Set(_val); }
 
         static public bool operator ==(JsonNumber _val, double _num)
         {
