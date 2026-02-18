@@ -80,6 +80,11 @@ namespace ChJson
             return (JsonObject)arrayVal[_index];
         }
 
+        public int GetCount()
+        {
+            return arrayVal.Count;
+        }
+
         public void Add(JsonBaseType _obj)
         {
             if(_obj == null)_obj = new JsonNull();

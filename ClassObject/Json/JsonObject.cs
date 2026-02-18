@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 namespace ChJson
 {
@@ -91,6 +92,24 @@ namespace ChJson
             if (!values.ContainsKey(key)) return null;
 
             return (JsonObject)values[key];
+        }
+
+        public int GetCount()
+        {
+            return values.Count;
+        }
+
+        public JsonString[] GetKeys()
+        {
+            JsonString[] res = new JsonString[values.Keys.Count];
+            values.Keys.CopyTo(res, 0);
+            return res;
+        }
+        public JsonBaseType[] GetValues()
+        {
+            JsonBaseType[] res = new JsonBaseType[values.Values.Count];
+            values.Values.CopyTo(res, 0);
+            return res;
         }
 
         public void Add(JsonBaseType _obj, string _key)
