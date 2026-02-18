@@ -19,13 +19,12 @@ namespace ChJson
             arrayVal[_index] = _obj;
         }
 
-        public JsonBaseType GetObj(int _index)
+        public JsonBaseType Get(int _index)
         {
             if (!IsInArrayRangeNum(_index)) return null;
 
             return arrayVal[_index];
         }
-
 
         public bool GetBool(int _index)
         {
@@ -67,6 +66,13 @@ namespace ChJson
             return num.GetInt();
         }
 
+        public JsonArray GetArray(int _index)
+        {
+            if (!IsInArrayRangeNum(_index)) return null;
+
+            return (JsonArray)arrayVal[_index];
+        }
+
         public JsonObject GetObject(int _index)
         {
             if (!IsInArrayRangeNum(_index)) return null;
@@ -82,31 +88,33 @@ namespace ChJson
 
         public void Add(string _str)
         {
-            var str = new JsonString();
-            str.Set(_str);
-            arrayVal.Add(str);
+            arrayVal.Add(new JsonString(_str));
         }
 
         public void Add(double _num)
         {
-            var num = new JsonNumber();
-            num.Set(_num);
-            arrayVal.Add(num);
+            arrayVal.Add(new JsonNumber(_num));
         }
 
         public void Add(bool _flg)
         {
-            var flg = new JsonBoolean();
-            flg.Set(_flg);
-            arrayVal.Add(flg);
+            arrayVal.Add(new JsonBoolean(_flg));
+        }
+
+        public void RemoveAt(int _index)
+        {
+            if (!IsInArrayRangeNum(_index)) return;
+
+            arrayVal.RemoveAt(_index);
         }
 
         public override bool SetRawData(string _text)
         {
+            if (_text.Length < 2) return false;
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;
-            if(!GetCutTextList(out textList, _text))return false;
+            if(!GetCutTextList(out textList, text))return false;
 
             for (int i = 0; i < textList.Count; i++)
             {
@@ -121,12 +129,16 @@ namespace ChJson
         {
             string res = "";
 
+            res += START_CHAR;
+
             for(int i =  0;i< arrayVal.Count;i++)
             {
                 res += arrayVal[i].GetRawData();
                 if (i < arrayVal.Count - 1)
                     res += CUT_CHAR;
             }
+
+            res += END_CHAR;
 
             return res;
         }

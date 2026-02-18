@@ -7,22 +7,145 @@ namespace ChJson
     public class JsonObject : JsonBaseType
     {
         public const char START_CHAR = '{';
-        public const char END_CHAR = ']';
+        public const char END_CHAR = '}';
         public const char CUT_CHAR = ',';
         public const char KEY_VALUE_CUT_CHAR = ':';
 
+        public void Set(JsonBaseType _obj, string _key)
+        {
+            if (_obj == null) _obj = new JsonNull();
+
+            values[new JsonString(_key)] = _obj;
+        }
+
+        public JsonBaseType Get(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return values[key];
+        }
+
+        public bool GetBool(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return false;
+
+            var flg = (JsonBoolean)values[key];
+            if (flg == null) return false;
+
+            return flg.Get();
+        }
+
+        public string GetString(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return "";
+
+            var str = (JsonString)values[key];
+            if (str == null) return "";
+
+            return str.Get();
+        }
+
+        public double GetNumberDouble(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return 0.0;
+
+            var num = (JsonNumber)values[key];
+            if (num == null) return 0.0;
+
+            return num.GetDouble();
+        }
+
+        public int GetNumberInt(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return 0;
+
+            var num = (JsonNumber)values[key];
+            if (num == null) return 0;
+
+            return num.GetInt();
+        }
+
+        public JsonArray GetArray(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return (JsonArray)values[key];
+        }
+
+        public JsonObject GetObject(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return null;
+
+            return (JsonObject)values[key];
+        }
+
+        public void Add(JsonBaseType _obj, string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (_obj == null) _obj = new JsonNull();
+            values[key] = _obj;
+        }
+
+        public void Add(string _str, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key] = new JsonString(_str);
+        }
+
+        public void Add(double _num, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key]= new JsonNumber(_num);
+        }
+
+        public void Add(bool _flg, string _key)
+        {
+            var key = new JsonString(_key);
+
+            values[key] = new JsonBoolean(_flg);
+        }
+
+        public void Remove(string _key)
+        {
+            var key = new JsonString(_key);
+
+            if (!values.ContainsKey(key)) return;
+
+            values.Remove(key);
+        }
+
         public override bool SetRawData(string _text)
         {
+            if (_text.Length < 2) return false;
             if (_text[0] != START_CHAR || _text[_text.Length - 1] != END_CHAR) return false;
             string text = _text.Substring(1, _text.Length - 2);
             List<string> textList;
-            if (!GetCutTextList(out textList, _text)) return false;
+            if (!GetCutTextList(out textList, text)) return false;
 
             bool successFlg = true;
 
             for(int i = 0;i < textList.Count;i++)
             {
                 var keyValue = CutKeyValue(textList[i]);
+                if (keyValue == null) continue;
+
                 var key = new JsonString();
                 if(!key.SetRawData(keyValue.key))
                 {
@@ -46,7 +169,26 @@ namespace ChJson
 
         public override string GetRawData()
         {
-            return "";
+            string res = "";
+
+            res += START_CHAR;
+
+            int count = 0;
+
+            foreach (var keyValues in values)
+            {
+                res += keyValues.Key.GetRawData();
+                res += KEY_VALUE_CUT_CHAR;
+                res += keyValues.Value.GetRawData();
+                if (count < values.Count - 1)
+                    res += CUT_CHAR;
+
+                count++;
+            }
+
+            res += END_CHAR;
+
+            return res;
         }
 
         class keyValue
@@ -69,7 +211,7 @@ namespace ChJson
 
                 keyValue res = new keyValue();
 
-                res.key = _val.Substring(0, i - 1);
+                res.key = _val.Substring(0, i);
                 res.value = _val.Substring(i + 1);
 
                 return res;

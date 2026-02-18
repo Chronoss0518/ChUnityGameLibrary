@@ -5,12 +5,19 @@ namespace ChJson
     [Serializable]
     public class JsonNumber : JsonBaseType
     {
+
+        public JsonNumber() { Set(0.0); }
+
+        public JsonNumber(double _val) { Set(_val); }
+
         static public bool operator ==(JsonNumber _val, double _num)
         {
+            if (_val is null) return false;
             return _num == _val.val;
         }
         static public bool operator !=(JsonNumber _val, double _num)
         {
+            if (_val is null) return true;
             return _num != _val.val;
         }
 
@@ -29,6 +36,8 @@ namespace ChJson
         public double GetDouble() { return val; }
 
         public int GetInt() { return (int)val; }
+
+        public bool Is(double _val) { return _val == val; }
 
         public override bool SetRawData(string _text)
         {
