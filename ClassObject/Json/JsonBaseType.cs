@@ -94,6 +94,11 @@ namespace ChJson
                 tmp += _text[i];
             }
 
+            if(tmp != "")
+            {
+                _res.Add(tmp);
+            }
+
             return true;
 
         }
