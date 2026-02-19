@@ -16,25 +16,21 @@ namespace ChJson
         {
             if (_obj == null) _obj = new JsonNull();
 
-            values[new JsonString(_key)] = _obj;
+            values[_key] = _obj;
         }
 
         public JsonBaseType Get(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return null;
 
-            if (!values.ContainsKey(key)) return null;
-
-            return values[key];
+            return values[_key];
         }
 
         public bool GetBool(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return false;
 
-            if (!values.ContainsKey(key)) return false;
-
-            var flg = (JsonBoolean)values[key];
+            var flg = (JsonBoolean)values[_key];
             if (flg == null) return false;
 
             return flg.Get();
@@ -42,11 +38,9 @@ namespace ChJson
 
         public string GetString(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return "";
 
-            if (!values.ContainsKey(key)) return "";
-
-            var str = (JsonString)values[key];
+            var str = (JsonString)values[_key];
             if (str == null) return "";
 
             return str.Get();
@@ -54,11 +48,9 @@ namespace ChJson
 
         public double GetNumberDouble(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return 0.0;
 
-            if (!values.ContainsKey(key)) return 0.0;
-
-            var num = (JsonNumber)values[key];
+            var num = (JsonNumber)values[_key];
             if (num == null) return 0.0;
 
             return num.GetDouble();
@@ -66,11 +58,9 @@ namespace ChJson
 
         public int GetNumberInt(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return 0;
 
-            if (!values.ContainsKey(key)) return 0;
-
-            var num = (JsonNumber)values[key];
+            var num = (JsonNumber)values[_key];
             if (num == null) return 0;
 
             return num.GetInt();
@@ -78,20 +68,16 @@ namespace ChJson
 
         public JsonArray GetArray(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return null;
 
-            if (!values.ContainsKey(key)) return null;
-
-            return (JsonArray)values[key];
+            return (JsonArray)values[_key];
         }
 
         public JsonObject GetObject(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return null;
 
-            if (!values.ContainsKey(key)) return null;
-
-            return (JsonObject)values[key];
+            return (JsonObject)values[_key];
         }
 
         public int GetCount()
@@ -99,9 +85,9 @@ namespace ChJson
             return values.Count;
         }
 
-        public JsonString[] GetKeys()
+        public string[] GetKeys()
         {
-            JsonString[] res = new JsonString[values.Keys.Count];
+            string[] res = new string[values.Keys.Count];
             values.Keys.CopyTo(res, 0);
             return res;
         }
@@ -114,45 +100,35 @@ namespace ChJson
 
         public void Add(JsonBaseType _obj, string _key)
         {
-            var key = new JsonString(_key);
-
             if (_obj == null) _obj = new JsonNull();
-            values[key] = _obj;
+            values[_key] = _obj;
         }
 
         public void Add(string _str, string _key)
         {
-            var key = new JsonString(_key);
-
-            values[key] = new JsonString(_str);
+            values[_key] = new JsonString(_str);
         }
 
         public void Add(double _num, string _key)
         {
-            var key = new JsonString(_key);
-
-            values[key]= new JsonNumber(_num);
+            values[_key]= new JsonNumber(_num);
         }
 
         public void Add(bool _flg, string _key)
         {
-            var key = new JsonString(_key);
-
-            values[key] = new JsonBoolean(_flg);
+            values[_key] = new JsonBoolean(_flg);
         }
 
         public void Remove(string _key)
         {
-            var key = new JsonString(_key);
+            if (!values.ContainsKey(_key)) return;
 
-            if (!values.ContainsKey(key)) return;
-
-            values.Remove(key);
+            values.Remove(_key);
         }
 
         public bool IsContainsKey(string _key)
         {
-            return values.ContainsKey(new JsonString(_key));
+            return values.ContainsKey(_key);
         }
 
         public bool IsContainsValue(JsonBaseType _value)
@@ -189,7 +165,7 @@ namespace ChJson
                     break;
                 }
 
-                values[key] = obj;
+                values[key.Get()] = obj;
             }
 
 
@@ -202,11 +178,14 @@ namespace ChJson
 
             res += START_CHAR;
 
+            var str = new JsonString();
+
             int count = 0;
 
             foreach (var keyValues in values)
             {
-                res += keyValues.Key.GetRawData();
+                str.Set(keyValues.Key);
+                res += str.GetRawData();
                 res += KEY_VALUE_CUT_CHAR;
                 res += keyValues.Value.GetRawData();
                 if (count < values.Count - 1)
@@ -250,7 +229,7 @@ namespace ChJson
             return null;
         }
 
-        Dictionary<JsonString,JsonBaseType>values = new Dictionary<JsonString,JsonBaseType>();
+        Dictionary<string,JsonBaseType>values = new Dictionary<string,JsonBaseType>();
     }
 
 }
