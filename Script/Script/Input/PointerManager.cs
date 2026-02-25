@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace ChUnity.Input
 {
     /// <summary>
@@ -58,6 +57,7 @@ namespace ChUnity.Input
 
         void UpdateTouchPoint()
         {
+#if ENABLE_LEGACY_INPUT_MANAGER
             if (UnityEngine.Input.touchCount <= 0) return;
 
             var touch = UnityEngine.Input.GetTouch(0);
@@ -67,11 +67,12 @@ namespace ChUnity.Input
             beforePoint = endPoint;
 
             endPoint = touch.position;
-
+#endif
         }
 
         void UpdateMousePoint()
         {
+#if ENABLE_LEGACY_INPUT_MANAGER
             mousePoint = UnityEngine.Input.mousePosition;
 
             int beforeCount = mouseButtonClickCount;
@@ -104,7 +105,7 @@ namespace ChUnity.Input
             {
                 endPoint = mousePoint;
             }
-
+#endif
         }
 
         bool[] mouseButtonClickFlg = new bool[MOUSE_BUTTON_CHECK_COUNT];
