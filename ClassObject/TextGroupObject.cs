@@ -79,7 +79,7 @@ namespace ChStd
             while (true)
             {
                 tmp = str.IndexOf(cutChar, tmp);
-                if (tmp >= basePos) return count;
+                if (tmp >= basePos) break;
 
                 count++;
                 tmp++;
