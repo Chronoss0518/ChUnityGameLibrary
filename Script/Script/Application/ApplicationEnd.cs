@@ -8,7 +8,16 @@ namespace ChUnity.Common
     {
         public void ShutDownApplication(int _num)
         {
+            ShutDown(_num);
+        }
+
+        public static void ShutDown(int _num)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit(_num);
+#endif
         }
     }
 }
