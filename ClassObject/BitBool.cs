@@ -74,7 +74,7 @@ namespace ChStd
 
         private byte GetPosition(int _pos)
         {
-            return (byte)(1 << (_pos % sizeof(byte)));
+            return (byte)(1 << (_pos % 8));
         } 
 
         byte[] flags = null;
